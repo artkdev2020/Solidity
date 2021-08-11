@@ -4,6 +4,6 @@ contract EthSwap{
     string public name;
 
     constructor() public {
-        name = "ArtKDev";
+        name = "EthSwap Instant Exchange";
     }
 }

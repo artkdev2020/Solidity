@@ -25,7 +25,7 @@ contract('EthSwap', ([deployer, bayer, seller]) => {
 
         it('has a name', async () => {
             const name = await ethSwap.name()
-            assert.equal(name, 'ArtKDev')
+            assert.equal(name, 'EthSwap Instant Exchange')
         })
 
 
