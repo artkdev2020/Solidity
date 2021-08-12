@@ -23,7 +23,7 @@ contract Color is ERC721, ERC721Enumerable {
 
     function mint(string memory _color) public {
         // Require unique color
-        // require(!_colorExists[_color]);
+        require(!_colorExists[_color]);
         // Color add color
         colors.push(_color);
         uint _id = colors.length;

@@ -37,14 +37,40 @@ contract('Color', async (accounts) => {
     describe('minting', async() => {
         it('creates a new token', async () => {  
             const result = await color.mint('#EC058E')
-
             const totalSupply = await color.totalSupply()
-            console.log(totalSupply)
             // SUCCESS
             assert.equal(totalSupply, 1)
-        
-        })
+            const event = result.logs[0].args
+            //console.log(event)
+            assert.equal(event.tokenId.toNumber(), 1, 'id is correct')
+            assert.equal(event.from, '0x0000000000000000000000000000000000000000', 'from is correct')
+            assert.equal(event.to, accounts[0], 'to is correct')
 
-        
+            //FAILURE : cannot mint color twice 
+            await color.mint('#EC058E').should.be.rejected
+        }) 
+    })
+
+    describe('indexing', async() => {
+        it('//lists color', async () => {  
+            // Mint 3 token
+            await color.mint('000000')
+            await color.mint('FFFFFF')
+            await color.mint('5386E4')
+
+            const totalSupply = await color.totalSupply()
+
+            let _color
+            let result = []
+
+            for(var i = 1; i <= totalSupply; i++) {
+                _color = await color.colors(i - 1);
+                result.push(_color)
+            }
+
+            let expected = ['#EC058E', '000000', 'FFFFFF', '5386E4']
+            // SUCCESS
+            assert.equal(result.join(','), expected.join(','))   
+        }) 
     })
 })
