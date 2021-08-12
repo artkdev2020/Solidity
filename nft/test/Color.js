@@ -8,13 +8,12 @@ require('chai')                             // chai
 .should()
 
 contract('Color', async (accounts) => {
+    let color
+    before(async () => {
+        color = await Color.deployed()
+    }) 
 
     describe('deployment', async() => {
-        let color
-        before(async () => {
-            color = await Color.deployed()
-        }) 
-
         it('deploys successfully', async () => {       
             const address = color.address
 
@@ -23,5 +22,29 @@ contract('Color', async (accounts) => {
             assert.notEqual(address, null)
             assert.notEqual(address, undefined)
         })
+
+        it('has a name', async () => {
+            let name = await color.name()
+            assert.equal(name, 'Color')
+        })
+
+        it('has a symbol', async () => {
+            let symbol = await color.symbol()
+            assert.equal(symbol, 'COLOR')
+        })
+    })
+
+    describe('minting', async() => {
+        it('creates a new token', async () => {  
+            const result = await color.mint('#EC058E')
+
+            const totalSupply = await color.totalSupply()
+            console.log(totalSupply)
+            // SUCCESS
+            assert.equal(totalSupply, 1)
+        
+        })
+
+        
     })
 })
