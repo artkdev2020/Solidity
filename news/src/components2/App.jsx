@@ -25,19 +25,9 @@ const App = () => {
     );
   }, []);
 
-  // const createPost = content => {
-  //   newsNetwork.methods.createPost(content).send({ from: account });
-  // };
-
-  // const tipPost = (id, tipAmount) => {
-  //   newsNetwork.methods.tipPost(id).send({ from: account, value: tipAmount });
-  // };
-
   return (
     <div>
       <PostPage account={account} posts={posts} newsNetwork={newsNetwork} />
-      {/* <Navbar account={account} />
-      <Main posts={posts} createPost={createPost} tipPost={tipPost} /> */}
     </div>
   );
 };
