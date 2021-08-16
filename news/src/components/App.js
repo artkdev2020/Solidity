@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "../logo.png";
 import Web3 from "web3";
 import "./App.css";
 import Navbar from "./Navbar";
