@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import Web3 from "web3";
 import Navbar from "./Navbar";
-// import News from "../abis/News.json";
-import Main from "./Main";
 import { Web3Api } from "../api/api";
 import PostPage from "./PostsPage";
 
@@ -27,6 +24,7 @@ const App = () => {
 
   return (
     <div>
+      <Navbar account={account} />
       <PostPage account={account} posts={posts} newsNetwork={newsNetwork} />
     </div>
   );

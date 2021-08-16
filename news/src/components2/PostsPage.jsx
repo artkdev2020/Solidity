@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+
 import Main from "./Main";
 
 const PostPage = props => {
@@ -15,7 +15,6 @@ const PostPage = props => {
 
   return (
     <div>
-      <Navbar account={props.account} />
       <Main posts={props.posts} createPost={createPost} tipPost={tipPost} />
     </div>
   );
