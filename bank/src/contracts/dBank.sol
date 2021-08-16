@@ -12,9 +12,9 @@ contract dBank {
   //add events
 
   //pass as constructor argument deployed Token contract
-  constructor() public {
+  /*constructor() public {
     //assign token deployed contract to variable
-  }
+  }*/
 
   function deposit() payable public {
     //check if msg.sender didn't already deposited funds
