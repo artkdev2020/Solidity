@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 // import News from "../abis/News.json";
 import Main from "./Main";
 import { Web3Api } from "../api/api";
+import PostPage from "./PostsPage";
 
 const App = () => {
   const [account, setAccount] = useState("");
@@ -24,18 +25,19 @@ const App = () => {
     );
   }, []);
 
-  const createPost = content => {
-    newsNetwork.methods.createPost(content).send({ from: account });
-  };
+  // const createPost = content => {
+  //   newsNetwork.methods.createPost(content).send({ from: account });
+  // };
 
-  const tipPost = (id, tipAmount) => {
-    newsNetwork.methods.tipPost(id).send({ from: account, value: tipAmount });
-  };
+  // const tipPost = (id, tipAmount) => {
+  //   newsNetwork.methods.tipPost(id).send({ from: account, value: tipAmount });
+  // };
 
   return (
     <div>
-      <Navbar account={account} />
-      <Main posts={posts} createPost={createPost} tipPost={tipPost} />
+      <PostPage account={account} posts={posts} newsNetwork={newsNetwork} />
+      {/* <Navbar account={account} />
+      <Main posts={posts} createPost={createPost} tipPost={tipPost} /> */}
     </div>
   );
 };
