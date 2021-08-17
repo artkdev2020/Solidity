@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Web3 from "web3";
 import Color from "../abis/Color.json";
-import { thisExpression } from "babel-types";
+import Add from "./add/Add";
 
 class App extends Component {
   async componentWillMount() {
@@ -47,7 +47,6 @@ class App extends Component {
           colors: [...this.state.colors, color]
         });
       }
-      console.log(this.state.colors);
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }
@@ -96,30 +95,7 @@ class App extends Component {
         </nav>
         <div className="container mt-5">
           <div className="row text-center">
-            <div className="content mr-auto ml-auto">
-              <h1>Issue Token</h1>
-              <form
-                onSubmit={event => {
-                  event.preventDefault();
-                  const color = this.color.value;
-                  this.mint(color);
-                }}
-              >
-                <input
-                  type="text"
-                  className="form-control mb-1"
-                  placeholder="e.g. #fff"
-                  ref={input => {
-                    this.color = input;
-                  }}
-                />
-                <input
-                  type="submit"
-                  className="btn btn-block btn-primary"
-                  value="MINT"
-                />
-              </form>
-            </div>
+            <Add mint={this.mint} />
           </div>
           <hr />
           <div className="row text-center">
