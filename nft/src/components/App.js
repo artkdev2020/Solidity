@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import Web3 from "web3";
 import Color from "../abis/Color.json";
-import AddColor from "./addColor/AddColor";
-import ColorComponent from "./ColorComponent.jsx";
+import Navbar from "./Navbar";
+import PageColors from "./page_colors/PageColors";
 
 class App extends Component {
   async componentWillMount() {
@@ -76,35 +76,9 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <a
-            className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="http://artkdev.online"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ArtKDev
-          </a>
-          <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-              <small className="text-white">
-                <span id="accaount">{this.state.account}</span>
-              </small>
-            </li>
-          </ul>
-        </nav>
-        <div className="container mt-5">
-          <div className="row text-center">
-            <AddColor mint={this.mint} />
-          </div>
-          <hr />
-          <div className="row text-center">
-            {this.state.colors.map((color, key) => {
-              return <ColorComponent color={color} key={key} />;
-            })}
-          </div>
-        </div>
+      <div className="container-fluid">
+        <Navbar account={this.state.account} />
+        <PageColors mint={this.mint} colors={this.state.colors} />
       </div>
     );
   }
