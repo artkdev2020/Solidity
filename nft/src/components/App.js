@@ -3,6 +3,7 @@ import "./App.css";
 import Web3 from "web3";
 import Color from "../abis/Color.json";
 import AddColor from "./addColor/AddColor";
+import ColorComponent from "./ColorComponent.jsx";
 
 class App extends Component {
   async componentWillMount() {
@@ -100,15 +101,7 @@ class App extends Component {
           <hr />
           <div className="row text-center">
             {this.state.colors.map((color, key) => {
-              return (
-                <div key={key} className="col mb-3">
-                  <div
-                    className="token"
-                    style={{ backgroundColor: color }}
-                  ></div>
-                  <div>{color}</div>
-                </div>
-              );
+              return <ColorComponent color={color} key={key} />;
             })}
           </div>
         </div>
