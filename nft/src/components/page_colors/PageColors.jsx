@@ -11,7 +11,7 @@ const PageColors = props => {
       <hr />
       <div className="row text-center">
         {props.colors.map((color, key) => {
-          return <ColorComponent color={color} key={key} />;
+          return <ColorComponent color={color} keyColor={key} />;
         })}
       </div>
     </div>
