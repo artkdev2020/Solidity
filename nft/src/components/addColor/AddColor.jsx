@@ -5,7 +5,6 @@ const AddColor = props => {
   // let [color, setColor] = useState({});
   const inputColor = useInput("", { isColor: true });
   const inputIsEmpty = useInput("", { isEmpty: true });
-  console.log(inputColor.isValid);
 
   return (
     <div className="content mr-auto ml-auto">
