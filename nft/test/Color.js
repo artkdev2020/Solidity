@@ -32,6 +32,11 @@ contract('Color', async (accounts) => {
             let symbol = await color.symbol()
             assert.equal(symbol, 'COLOR')
         })
+
+        it('only owner', async () => {
+            let owner = await color.owner()
+            assert.equal(owner, accounts[0])
+        })
     })
 
     describe('minting', async() => {
@@ -46,8 +51,15 @@ contract('Color', async (accounts) => {
             assert.equal(event.from, '0x0000000000000000000000000000000000000000', 'from is correct')
             assert.equal(event.to, accounts[0], 'to is correct')
 
+            // new color owner
+            gt
+            console.log(colorOwner)
+            assert.equal(colorOwner, accounts[0], 'owner is correct')
+
             //FAILURE : cannot mint color twice 
             await color.mint('#EC058E').should.be.rejected
+
+            // 
         }) 
     })
 

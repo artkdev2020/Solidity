@@ -8,9 +8,18 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract Color is ERC721, ERC721Enumerable {
     string[] public colors;
+    address public owner; 
     mapping(string => bool) _colorExists;
 
+    mapping(string => address) public colorOwner;
+
     constructor() ERC721("Color", "COLOR")  {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override(ERC721, ERC721Enumerable) {
@@ -21,7 +30,7 @@ contract Color is ERC721, ERC721Enumerable {
         return super.supportsInterface(interfaceId);
     }
 
-    function mint(string memory _color) public {
+    function mint(string memory _color) onlyOwner public {
         // Require unique color
         require(!_colorExists[_color]);
         // Color add color
@@ -31,13 +40,7 @@ contract Color is ERC721, ERC721Enumerable {
         _mint(msg.sender, _id);
         // Color track it
         _colorExists[_color] = true;
+        // add owner to color
+        colorOwner[_color] = msg.sender;
     }
-
-   /* function mint(string memory _color) public {
-        colors.push(_color);
-        uint _id = colors.length;
-        _mint(msg.sender, _id);
-        _colorExists[_color] = true;
-
-    }*/
 }
