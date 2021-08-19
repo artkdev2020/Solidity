@@ -1,92 +1,54 @@
-import { Tabs, Tab } from 'react-bootstrap'
-import dBank from '../abis/dBank.json'
-import React, { Component } from 'react';
-import Token from '../abis/Token.json'
-import dbank from '../dbank.png';
-import Web3 from 'web3';
-import './App.css';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from "react";
+import { Tabs, Tab } from "react-bootstrap";
+import Web3API from "../api/web3_api";
 
-//h0m3w0rk - add new tab to check accrued interest
+const App = (props) => {
 
-class App extends Component {
+  const [web3, setWeb3] = useState("");
+  const [account, setAccount] = useState("");
+  const [token, setToken] = useState({});
+  const [dbank, setDbank] = useState({});
+  const [balance, setBalance] = useState(0);
+  const [dBankAddress, setDBankAddress] = useState({});
+  const [depositAmount, setDepositAmount] = useState({});
 
-  async componentWillMount() {
-    await this.loadBlockchainData(this.props.dispatch)
+  const contract = {
+    setWeb3,
+    setAccount,
+    setToken,
+    setDbank,
+    setBalance,
+    setDBankAddress
   }
 
-  async loadBlockchainData(dispatch) {
-    
-    if(typeof window.ethereum !== 'undefined') {
-      const web3 = new Web3(window.ethereum);
-      const netId = await web3.eth.net.getId();
-      const accounts = await web3.eth.getAccounts();
-
-      // load balance
-      if(typeof accounts[0] !== "undefined") {
-        const balance = await web3.eth.getBalance(accounts[0]);
-        this.setState({account: accounts[0], balance: balance, web3: web3});
-      } else {
-        window.alert("Please login with Metamask");
-      }
-
-      // Token
-
-      //Bank
-
+  useEffect(() => {
+    Web3API.loadBlockchainData(props.dispatch, contract);
+  }, []);
+  
+  const deposit = async (amount) => {
+    if(dbank !== "undefined") {
       try {
-        const token = new web3.eth.Contract(Token.abi, Token.networks[netId].address);
-        const dbank = new web3.eth.Contract(dBank.abi, dBank.networks[netId].address);
-        const dBankAddress = dBank.networks[netId].address;
-        const tokenBalance = await token.methods.balanceOf(this.state.account).call();
-        console.log(web3.utils.fromWei(tokenBalance));
-        this.setState({token: token, dbank: dbank, dBankAddress: dBankAddress});
-      } catch(ex) {
-        console.log("Error", ex);
-        window.alert("Contracts not deployed to the current network");
-      }
-      
-    } else {
-      window.alert("Please install MetaMask");
-    }
-    
-  }
-
-  async deposit(amount) {
-    if(this.state.dbank !== "undefined") {
-      try {
-        await this.state.dbank.methods.deposit().send({value: amount.toString(), from: this.state.account})
+        await dbank.methods.deposit().send({value: amount.toString(), from: account})
       } catch (ex) {
         console.log("Error, deposit: ", ex);
       }
     }
   }
 
-  async withdraw(e) {
+  const withDraw = async (e) => {
     e.preventDefault();
-    if(this.state.dbank !== "undefined") {
+    if(dbank !== "undefined") {
       try{
-        await this.state.dbank.methods.withdraw().send({from: this.state.account});
+        await dbank.methods.withdraw().send({from: account});
       } catch(ex){
         console.log("Error, withdraw: ", ex);
       }
     }
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      web3: 'undefined',
-      account: '',
-      token: null,
-      dbank: null,
-      balance: 0,
-      dBankAddress: null
-    }
-  }
-
-  render() {
-    return (
-      <div className='text-monospace'>
+  return (
+    <div className='text-monospace'>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0"
@@ -101,7 +63,7 @@ class App extends Component {
         <div className="container-fluid mt-5 text-center">
         <br></br>
           <h1>Welcome to dBank</h1>
-          <h2>{this.state.account}</h2>
+          <h2>{account}</h2>
           <br></br>
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
@@ -118,9 +80,9 @@ class App extends Component {
                     <br />
                     <form onSubmit={(e) => {
                       e.preventDefault();
-                      let amount = this.depositAmount.value;
+                      let amount = depositAmount.value;
                       amount = amount * 10 **18; // convert to wei
-                      this.deposit(amount);
+                      deposit(amount);
                     }}>
                       <div className="form-group mr-sm-2">
                       <br />
@@ -131,7 +93,7 @@ class App extends Component {
                         className="form-control form-control-md"
                         placeholder="amount..."
                         required
-                        ref={(input) => {this.depositAmount = input}}
+                        ref={(input) => {setDepositAmount(input)}}
                       />
                       </div>
                       <button type="submit" className="btn btn-primary">DEPOSIT</button>
@@ -146,7 +108,7 @@ class App extends Component {
                     <br />
                   </div>
                   <div>
-                    <button type="submit" className="btn btn-primary" onClick={e => this.withdraw(e)}>
+                    <button type="submit" className="btn btn-primary" onClick={e => withDraw(e)}>
                       WITHDRAW
                     </button>
                   </div>
@@ -157,8 +119,7 @@ class App extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+  );
 }
 
 export default App;
