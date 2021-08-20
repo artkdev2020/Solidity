@@ -1,36 +1,49 @@
 const { assert } = require('chai');
 
+const Token = artifacts.require("Token");
 const EthSwap = artifacts.require("EthSwap");
 
 require('chai')                             // chai
 .use(require('chai-as-promised'))
 .should()
 
+function tokens(n) {
+    return web3.utils.toWei(n, 'ether')
+}
+
 contract('EthSwap', ([deployer, bayer, seller]) => {
-    let ethSwap
+    let token, ethSwap
 
     before(async () => {
-        ethSwap = await EthSwap.deployed()
+        token = await Token.new()
+        ethSwap = await EthSwap.new(token.address)
+        // transfer all tokens
+        await token.transfer(ethSwap.address, tokens('1000000')) 
     })
 
-    describe('deployment', async () => {
-        it('deploy successfully', async () => {
-
-            const address = ethSwap.address
-            assert.notEqual(address, 0x0)
-            assert.notEqual(address, '')
-            assert.notEqual(address, null)
-            assert.notEqual(address, undefined)
+    describe('Token deployment', async () => {
+        it('Token has a name', async () => {
+            const name = await token.name()
+            assert.equal(name, 'DApp Token')
+            //console.log(name)
         })
+    })
 
-        it('has a name', async () => {
+    describe('EthSwap deployment', async () => {
+        it('EthSwap has a name', async () => {
             const name = await ethSwap.name()
             assert.equal(name, 'EthSwap Instant Exchange')
+            //console.log(name)
         })
 
-
-
+        it('EthSwap has a tokens', async () => {
+            let balance = await token.balanceOf(ethSwap.address)
+            assert.equal(balance.toString(), tokens('1000000'))
+        })
     })
+
+
+   
 
 })
 
