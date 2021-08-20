@@ -63,36 +63,19 @@ const App = () => {
     loadBlockchainData();
   }, []);
 
-  const checkIfColorExists = (color) => {
-    let exists = false;
-
-    colors.forEach((c) => {
-      if (c === color) {
-        exists = true;
-      }
-    });
-
-    return exists;
-  };
-
   const mint = (color) => {
-    if (checkIfColorExists(color)) {
-      let _colors = colors;
-      _colors.push(color);
+    let _colors = Object.assign([], colors);
+    _colors.push(color);
 
-      contract.methods
-        .mint(color)
-        .send({ from: account })
-        .on("receipt", (receipt) => {
-          console.log("receipt: ", receipt);
-        })
-        .on("confirmation", (confirmation) => {
-          console.log("confirmation: ", confirmation);
-          this.setColors(_colors);
-        });
-    } else {
-      alert("Color already exists!");
-    }
+    contract.methods
+      .mint(color)
+      .send({ from: account })
+      .on("receipt", (receipt) => {
+        console.log("receipt: ", receipt);
+      })
+      .on("confirmation", (confirmation) => {
+        setColors(_colors);
+      });
   };
 
   return (
@@ -103,7 +86,7 @@ const App = () => {
           <main role="main" className="col-lg-12 d-flex text-center">
             <div className="content mr-auto ml-auto">
               <h1>Issue Token</h1>
-              <Form mint={mint} />
+              <Form colors={colors} mint={mint} />
             </div>
           </main>
         </div>
