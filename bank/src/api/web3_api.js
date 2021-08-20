@@ -30,7 +30,6 @@ const Web3API = {
         const dbank = new web3.eth.Contract(dBank.abi, dBank.networks[netId].address);
         const dBankAddress = dBank.networks[netId].address;
         const tokenBalance = await token.methods.balanceOf(accounts[0]).call();
-        console.log(web3.utils.fromWei(tokenBalance));
         contract.setToken(token);
         contract.setDbank(dbank);
         contract.setDBankAddress(dBankAddress);
@@ -44,6 +43,11 @@ const Web3API = {
     } else {
       window.alert("Please install MetaMask");
     }
+  },
+
+  setNewBalance: async (web3, account, setBalance) => {
+    const balance = await web3.eth.getBalance(account);
+    setBalance(balance);
   }
 }
 

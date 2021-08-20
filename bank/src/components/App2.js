@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import Web3API from "../api/web3_api";
+import dbankImg from "../dbank.png";
 
 const App = (props) => {
 
@@ -12,6 +13,10 @@ const App = (props) => {
   const [balance, setBalance] = useState(0);
   const [dBankAddress, setDBankAddress] = useState({});
   const [depositAmount, setDepositAmount] = useState({});
+
+  window.ethereum.on("accountsChanged", () => {
+    Web3API.loadBlockchainData(props.dispatch, contract);
+  });
 
   const contract = {
     setWeb3,
@@ -29,7 +34,8 @@ const App = (props) => {
   const deposit = async (amount) => {
     if(dbank !== "undefined") {
       try {
-        await dbank.methods.deposit().send({value: amount.toString(), from: account})
+        await dbank.methods.deposit().send({value: amount.toString(), from: account});
+        Web3API.setNewBalance(web3, account, setBalance);
       } catch (ex) {
         console.log("Error, deposit: ", ex);
       }
@@ -41,6 +47,7 @@ const App = (props) => {
     if(dbank !== "undefined") {
       try{
         await dbank.methods.withdraw().send({from: account});
+        Web3API.setNewBalance(web3, account, setBalance);
       } catch(ex){
         console.log("Error, withdraw: ", ex);
       }
@@ -56,7 +63,7 @@ const App = (props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-        <img src={dbank} className="App-logo" alt="logo" height="32"/>
+        <img src={dbankImg} className="App-logo" alt="logo" height="32"/>
           <b>dBank</b>
         </a>
         </nav>
@@ -67,6 +74,7 @@ const App = (props) => {
           <br></br>
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
+              <div className="row">{web3.utils?.fromWei(balance)}</div>
               <div className="content mr-auto ml-auto">
               <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                 <Tab eventKey="deposit" title="Deposit">
