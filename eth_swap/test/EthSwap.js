@@ -103,8 +103,5 @@ contract('EthSwap', ([deployer, investor, seller]) => {
             await ethSwap.sellToken(tokens('5000'), { from: investor }).should.be.rejected
         })
     })
-
-   
-
 })
 
