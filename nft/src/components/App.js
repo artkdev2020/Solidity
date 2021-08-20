@@ -61,18 +61,38 @@ const App = () => {
     };
 
     loadBlockchainData();
-  }, [colors]);
+  }, []);
+
+  const checkIfColorExists = (color) => {
+    let exists = false;
+
+    colors.forEach((c) => {
+      if (c === color) {
+        exists = true;
+      }
+    });
+
+    return exists;
+  };
 
   const mint = (color) => {
-    console.log(color);
-    let _colors = colors;
-    _colors.push(color);
-    contract.methods
-      .mint(color)
-      .send({ from: account })
-      .once("receipt", (receipt) => {
-        console.log("ya tut");
-      });
+    if (checkIfColorExists(color)) {
+      let _colors = colors;
+      _colors.push(color);
+
+      contract.methods
+        .mint(color)
+        .send({ from: account })
+        .on("receipt", (receipt) => {
+          console.log("receipt: ", receipt);
+        })
+        .on("confirmation", (confirmation) => {
+          console.log("confirmation: ", confirmation);
+          this.setColors(_colors);
+        });
+    } else {
+      alert("Color already exists!");
+    }
   };
 
   return (
