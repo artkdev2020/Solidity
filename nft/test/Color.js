@@ -52,8 +52,11 @@ contract('Color', async (accounts) => {
             assert.equal(event.to, accounts[0], 'to is correct')
 
             // new color owner
-            gt
+            const colorOwner = await color.colorOwner('#EC058E')
+            const ownerToken = await color.ownerOf(1)
+            
             console.log(colorOwner)
+            console.log(ownerToken)
             assert.equal(colorOwner, accounts[0], 'owner is correct')
 
             //FAILURE : cannot mint color twice 
