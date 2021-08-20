@@ -61,16 +61,17 @@ const App = () => {
     };
 
     loadBlockchainData();
-  }, []);
+  }, [colors]);
 
   const mint = (color) => {
+    console.log(color);
     let _colors = colors;
     _colors.push(color);
     contract.methods
       .mint(color)
       .send({ from: account })
       .once("receipt", (receipt) => {
-        this.setColors(_colors);
+        console.log("ya tut");
       });
   };
 
