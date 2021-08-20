@@ -1,16 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import Web3API from "../api/web3_api";
 import dbankImg from "../dbank.png";
+import TabDeposit from "./TabDeposit";
 
 const App = (props) => {
 
   const [web3, setWeb3] = useState("");
   const [account, setAccount] = useState("");
+  // eslint-disable-next-line
   const [token, setToken] = useState({});
   const [dbank, setDbank] = useState({});
   const [balance, setBalance] = useState(0);
+  // eslint-disable-next-line
   const [dBankAddress, setDBankAddress] = useState({});
   const [depositAmount, setDepositAmount] = useState({});
 
@@ -29,6 +31,7 @@ const App = (props) => {
 
   useEffect(() => {
     Web3API.loadBlockchainData(props.dispatch, contract);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   const deposit = async (amount) => {
@@ -77,36 +80,9 @@ const App = (props) => {
               <div className="row">{web3.utils?.fromWei(balance)}</div>
               <div className="content mr-auto ml-auto">
               <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                
                 <Tab eventKey="deposit" title="Deposit">
-                  <div>
-                    <br />
-                    How much do you want to deposit?
-                    <br />
-                    (min. amount is 0.01 ETH)
-                    <br />
-                    (1 deposit is possible at the time)
-                    <br />
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
-                      let amount = depositAmount.value;
-                      amount = amount * 10 **18; // convert to wei
-                      deposit(amount);
-                    }}>
-                      <div className="form-group mr-sm-2">
-                      <br />
-                      <input 
-                        id="depositAmount"
-                        step="0.01"
-                        type="number"
-                        className="form-control form-control-md"
-                        placeholder="amount..."
-                        required
-                        ref={(input) => {setDepositAmount(input)}}
-                      />
-                      </div>
-                      <button type="submit" className="btn btn-primary">DEPOSIT</button>
-                      </form>
-                  </div>
+                  <TabDeposit depositAmount={depositAmount.value} deposit={deposit} setDepositAmount={setDepositAmount} />
                 </Tab>
                 <Tab eventKey="withdraw" title="Withdraw">
                   <div>
