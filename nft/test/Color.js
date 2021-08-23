@@ -52,17 +52,14 @@ contract('Color', async (accounts) => {
             assert.equal(event.to, accounts[0], 'to is correct')
 
             // new color owner
-            const colorOwner = await color.colorOwner('#EC058E')
-            const ownerToken = await color.ownerOf(1)
-            
-            console.log(colorOwner)
-            console.log(ownerToken)
-            assert.equal(colorOwner, accounts[0], 'owner is correct')
-
+            const colorName = await color.colorsName(1)
+            const ownerToken = await color.ownerOf(1)  
+            //console.log(colorName)
+            //console.log(ownerToken)
+            assert.equal(colorName, '#EC058E', 'color name is correct')
+            assert.equal(ownerToken, accounts[0], 'owner is correct')
             //FAILURE : cannot mint color twice 
             await color.mint('#EC058E').should.be.rejected
-
-            // 
         }) 
     })
 
@@ -86,6 +83,27 @@ contract('Color', async (accounts) => {
             let expected = ['#EC058E', '000000', 'FFFFFF', '5386E4']
             // SUCCESS
             assert.equal(result.join(','), expected.join(','))   
+        }) 
+    })
+
+    describe('trunsfering', async() => {
+        it('transfer', async () => {  
+            // get old color owner
+            const oldOwner = await color.ownerOf(1)
+            // transfer
+            const result = await color.trunsfer("0x4F7CCfd2e0629C334Aa5ef9E5dd91371FB90C603", 1)
+            //get new owner
+            const newOwner = await color.ownerOf(1)
+            // SUCCESS
+            assert.equal(newOwner, '0x4F7CCfd2e0629C334Aa5ef9E5dd91371FB90C603', 'owner is correct')
+
+            const event = result.logs[0].args
+            console.log(result)
+            console.log(event)
+    
+            //FAILURE : cannot mint color twice 
+            await color.trunsfer("0xf9eF33f1fc3FD3bBaBc2A8b552ce64d10cC0cC2e", 1).should.be.rejected
+
         }) 
     })
 })

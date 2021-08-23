@@ -11,7 +11,9 @@ contract Color is ERC721, ERC721Enumerable {
     address public owner; 
     mapping(string => bool) _colorExists;
 
-    mapping(string => address) public colorOwner;
+    uint colorCount = 0;
+    mapping(uint => string) public colorsName;
+
 
     constructor() ERC721("Color", "COLOR")  {
         owner = msg.sender;
@@ -40,7 +42,22 @@ contract Color is ERC721, ERC721Enumerable {
         _mint(msg.sender, _id);
         // Color track it
         _colorExists[_color] = true;
-        // add owner to color
-        colorOwner[_color] = msg.sender;
+        // add color
+        colorCount++;
+        // add color name to id
+        colorsName[colorCount] = _color;
     }
+
+    function trunsfer(
+        address _to, 
+        uint _tokenId
+        ) public {
+        // Require unique color
+        string memory _color = colorsName[_tokenId];
+        require(_colorExists[_color]);
+        // call transfer
+        transferFrom(msg.sender, _to, _tokenId);
+    }
+
+
 }
