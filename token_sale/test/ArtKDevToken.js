@@ -39,9 +39,27 @@ contract('ArtKDevToken', (accounts) => {
   })
 
   it('transfer token ownership', async () => {
+    // function transfer testing
+    balanceBefore = await token.balanceOf(accounts[1])
+    result = await token.transfer(accounts[1], 250000, { from: accounts[0] })
 
-    await token.transfer(accounts[1], 9999999999999999999999).should.be.rejected;
+    balanceAfter = await token.balanceOf(accounts[1])
+    assert.equal(balanceBefore.toNumber(), 0, 'correct balance before')
+    assert.equal(balanceAfter.toNumber(), 250000, 'correct balance after transfer')
+    balance = await token.balanceOf(accounts[0])
+    assert.equal(balance.toNumber(), 750000, 'correct balance in sending account')
 
+    // event result testing
+    transferEvent = result.logs[0]
+    assert.equal(result.logs.length, 1, "logs length is correct")
+    //console.log(result.logs.length)
+    //console.log(result)
+    assert.equal(transferEvent.args._from, accounts[0], "logs _from account is correct")
+    assert.equal(transferEvent.args._to, accounts[1], "logs _to account is correct")
+    assert.equal(transferEvent.args._value.toNumber(), 250000, "logs _value account is correct")
+    assert.equal(transferEvent.event, 'Transfer', "logs event name is correct")
+    // need add chai require
+    /*await token.transfer(accounts[1], 9999999999999999999999).should.be.rejected;*/
   })
 
 

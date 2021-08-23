@@ -15,6 +15,13 @@ contract ArtKDevToken {
 
   mapping(address => uint) internal balance;
 
+  //  events
+  event Transfer(
+    address indexed _from,
+    address indexed _to,
+    uint256 _value
+  );
+
   // Constractor
   constructor(uint256 _initialSupply) public {
     totalSupply = _initialSupply;
@@ -30,23 +37,30 @@ contract ArtKDevToken {
 
   // Transfer
   function transfer(
-    address payable _to,
+    address _to,
     uint _value
     ) public returns(bool) {
       // exception if account doesn't have enough
-      require(balanceOf(msg.sender) >= _value);
-
-      
-
-      // return boolean
-
+      require(balance[msg.sender] >= _value);
+      // transfer the balance
+      balance[msg.sender] -= _value;
+      balance[_to] += _value;
       // transfer event
+      emit Transfer(msg.sender, _to, _value);    
+      // return boolean
+      return true;
   }
 
+  // approve
+  function approve(
+    address _sender, 
+    uint256 _value
+    ) public returns(bool) {
+      
+    }
+  // transfeFrom
 
-
-  // Set the Tokens
-  // Real the total of tokens
+  
 
 
 
