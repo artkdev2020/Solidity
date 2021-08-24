@@ -31,7 +31,7 @@ export const Button = styled.div`
 export const Arrows = styled.div`
   display: flex;
   align-items: center;
-  cursor: none;
+  cursor: default;
   color: #6c757d;
 `;
 

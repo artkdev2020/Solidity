@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Form = styled.form`
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BalanceContainer = styled.div``;
@@ -31,8 +32,7 @@ export const Input = styled.input`
   font-size: 1.25rem;
   font-size: 1rem;
   color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
+  background-color: ${({ disabled }) => (disabled ? "#cecece" : "#fff")};
   border: 1px solid #ced4da;
   border-radius: 0.3rem;
 `;
@@ -57,7 +57,7 @@ export const IconContainer = styled.div`
 export const TokenLogo = styled.img``;
 
 export const RowContainer = styled.div`
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 `;
 
 export const ExchangeRateLabel = styled.div`

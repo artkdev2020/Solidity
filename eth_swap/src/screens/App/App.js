@@ -101,18 +101,13 @@ const App = () => {
   const buyTokens = (etherAmount) => {
     setLoading(true);
 
-    try {
-      const { ethSwap, account } = web3Info;
-      console.log(ethSwap.methods.buyTokens());
-      ethSwap.methods
-        .buyTokens()
-        .send({ value: etherAmount, from: account })
-        .on("transactionHash", (hash) => {
-          setLoading(false);
-        });
-    } catch (e) {
-      console.log("Error on buyTokens", e);
-    }
+    const { ethSwap, account } = web3Info;
+    ethSwap.methods
+      .buyTokens()
+      .send({ value: etherAmount, from: account })
+      .on("transactionHash", (hash) => {
+        setLoading(false);
+      });
   };
 
   const sellTokens = (tokenAmount) => {

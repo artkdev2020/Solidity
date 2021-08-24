@@ -17,10 +17,12 @@ import {
 
 const SellForm = ({ sellTokens, tokenBalance, ethBalance }) => {
   const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
 
   const changeInputValue = (event) => {
     const tokenAmount = event.target.value;
-    setInputValue((tokenAmount / 100).toString());
+    setInputValue(tokenAmount.toString());
+    setOutputValue((tokenAmount / 100).toString());
   };
 
   const onFormSubmit = (event) => {
@@ -57,7 +59,7 @@ const SellForm = ({ sellTokens, tokenBalance, ethBalance }) => {
         </BalanceSpan>
       </BalanceContainer>
       <InputContainer>
-        <Input type="text" placeholder="0" value={inputValue} disabled />
+        <Input type="text" placeholder="0" value={outputValue} disabled />
         <IconContainer>
           <TokenLogo src={ethLogo} height="32" alt="" />
           &nbsp;&nbsp;&nbsp; ETH

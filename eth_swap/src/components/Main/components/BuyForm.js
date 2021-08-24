@@ -18,10 +18,12 @@ import {
 
 const BuyForm = ({ buyTokens, ethBalance, tokenBalance }) => {
   const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
 
   const changeInputValue = (event) => {
     const etherAmount = event.target.value;
-    setInputValue((etherAmount * 100).toString());
+    setInputValue(etherAmount.toString());
+    setOutputValue((etherAmount * 100).toString());
   };
 
   const onFormSubmit = (event) => {
@@ -59,7 +61,7 @@ const BuyForm = ({ buyTokens, ethBalance, tokenBalance }) => {
         </BalanceSpan>
       </BalanceContainer>
       <InputContainer>
-        <Input type="text" placeholder="0" value={inputValue} disabled />
+        <Input type="text" placeholder="0" value={outputValue} disabled />
         <IconContainer>
           <TokenLogo src={tokenLogo} height="32" alt="" />
           &nbsp; DApp
