@@ -10,28 +10,8 @@ import {
   CardContent,
 } from "./styles";
 
-const Main = ({ ethBalance, tokenBalance, buyTokens, sellTokens }) => {
+const Main = () => {
   const [currentForm, setCurrentForm] = useState("buy");
-
-  const getContent = () => {
-    if (currentForm === "buy") {
-      return (
-        <BuyForm
-          ethBalance={ethBalance}
-          tokenBalance={tokenBalance}
-          buyTokens={buyTokens}
-        />
-      );
-    } else {
-      return (
-        <SellForm
-          ethBalance={ethBalance}
-          tokenBalance={tokenBalance}
-          sellTokens={sellTokens}
-        />
-      );
-    }
-  };
 
   return (
     <Container id="content">
@@ -42,7 +22,9 @@ const Main = ({ ethBalance, tokenBalance, buyTokens, sellTokens }) => {
       </ButtonsContainer>
 
       <CardContainer>
-        <CardContent>{getContent()}</CardContent>
+        <CardContent>
+          {currentForm === "buy" ? <BuyForm /> : <SellForm />}
+        </CardContent>
       </CardContainer>
     </Container>
   );
