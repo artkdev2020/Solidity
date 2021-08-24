@@ -77,11 +77,16 @@ contract ArtKDevToken {
     address _to,
     uint _value
   ) public returns(bool) {
-    
     // require _from has enough token
     // require allowance is BIG enough
+    require(balanceOf(_from) >= _value);
+    require(allowance[_from][msg.sender] >= _value);
+    
     // change the balance
+    balance[_from] -= _value;
+    balance[_to] += _value;
     // update the allowance
+    allowance[_from][msg.sender] -= _value;
     // event trunsfer 
     emit Transfer(_from, _to, _value); 
     

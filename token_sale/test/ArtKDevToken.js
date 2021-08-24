@@ -84,16 +84,32 @@ contract('ArtKDevToken', (accounts) => {
     toAccount = accounts[3]
     apendingAccount = accounts[4]
     await token.transfer(fromAccount, 1000, {from: accounts[0]})
-
     // approve sendingAccount to sends from fromAccount
-    await token.apprtove(toAccount, 100, {from: fromAccount})
+    await token.approve(apendingAccount, 100, {from: fromAccount})
 
+    balanceBefore = await token.balanceOf(toAccount)
 
+    result = await token.transferFrom(fromAccount, toAccount, 100, { from: apendingAccount })
 
+    balanceAfter = await token.balanceOf(toAccount)
+    balanceAfterFrom = await token.balanceOf(fromAccount)
+    allowanceAfter = await token.allowance(fromAccount, apendingAccount)
+    assert.equal(balanceAfter.toNumber() - balanceBefore.toNumber(), 100, 'balance after transfer from corecct added')
+    assert.equal(balanceAfterFrom.toNumber(), 900, 'balance from after transfer corecct')
+    assert.equal(allowanceAfter.toNumber(), 0, 'balance after transfer from corecct added')
+    
+    transferEvent = result.logs[0]
+
+    assert.equal(result.logs.length, 1, "logs length is correct")
+    assert.equal(transferEvent.args._from, fromAccount, "logs _owner account is correct")
+    assert.equal(transferEvent.args._to, toAccount, "logs _sender account is correct")
+    assert.equal(transferEvent.args._value.toNumber(), 100, "logs _value account is correct")
+    assert.equal(transferEvent.event, 'Transfer', "logs event name is correct")
+
+    // FAILURE : should.be.rejected transferFrom  
+    //await token.approve(apendingAccount, 100, {from: fromAccount})
+    //await token.transferFrom(fromAccount, toAccount, 1000, { from:apendingAccount }).should.be.rejected
+    //await token.transferFrom(fromAccount, toAccount, 200, { from:apendingAccount }).should.be.rejected
+    //await token.transferFrom(fromAccount, toAccount, 100, { from:fromAccount }).should.be.rejected
   });
-
-
-
-
-
 })
