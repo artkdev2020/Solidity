@@ -14,11 +14,18 @@ contract ArtKDevToken {
   uint public totalSupply;
 
   mapping(address => uint) internal balance;
+  mapping(address => mapping(address => uint)) public allowance;
 
   //  events
   event Transfer(
     address indexed _from,
     address indexed _to,
+    uint256 _value
+  );
+
+  event Approval(
+    address indexed _owner,
+    address indexed _sender,
     uint256 _value
   );
 
@@ -56,9 +63,30 @@ contract ArtKDevToken {
     address _sender, 
     uint256 _value
     ) public returns(bool) {
-      
-    }
+      // allowance
+      allowance[msg.sender][_sender] = _value;
+      // approve event
+      emit Approval(msg.sender, _sender, _value);
+
+      return true;
+  }
+
   // transfeFrom
+  function transferFrom(
+    address _from,
+    address _to,
+    uint _value
+  ) public returns(bool) {
+    
+    // require _from has enough token
+    // require allowance is BIG enough
+    // change the balance
+    // update the allowance
+    // event trunsfer 
+    emit Transfer(_from, _to, _value); 
+    
+    return true;
+  }
 
   
 
