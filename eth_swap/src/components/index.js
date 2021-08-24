@@ -1,3 +1,4 @@
 import { Main } from "./Main";
+import { Navbar } from "./Navbar";
 
-export { Main };
+export { Main, Navbar };

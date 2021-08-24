@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { ethLogo, tokenLogo } from "../../../assets/images";
-
+import { ethLogo, tokenLogo } from "../../../../assets/images";
 import {
   Form,
   BalanceContainer,
@@ -14,30 +13,30 @@ import {
   ExchangeRateLabel,
   ExchangeRateValue,
   SwapButton,
-} from "./styles";
+} from "../styles";
 
-const BuyForm = ({ buyTokens, ethBalance, tokenBalance }) => {
+const SellForm = ({ sellTokens, tokenBalance, ethBalance }) => {
   const [inputValue, setInputValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
 
   const changeInputValue = (event) => {
-    const etherAmount = event.target.value;
-    setInputValue(etherAmount.toString());
-    setOutputValue((etherAmount * 100).toString());
+    const tokenAmount = event.target.value;
+    setInputValue(tokenAmount.toString());
+    setOutputValue((tokenAmount / 100).toString());
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
     const etherAmount = window.web3.utils.toWei(inputValue, "Ether");
-    buyTokens(etherAmount);
+    sellTokens(etherAmount);
   };
 
   return (
-    <Form className="mb-3" onSubmit={onFormSubmit}>
+    <Form onSubmit={onFormSubmit}>
       <BalanceContainer>
         <Label>Input</Label>
         <BalanceSpan>
-          Balance: {window.web3.utils.fromWei(ethBalance, "Ether")}
+          Balance: {window.web3.utils.fromWei(tokenBalance, "Ether")}
         </BalanceSpan>
       </BalanceContainer>
       <InputContainer>
@@ -49,31 +48,30 @@ const BuyForm = ({ buyTokens, ethBalance, tokenBalance }) => {
           required
         />
         <IconContainer>
-          <TokenLogo src={ethLogo} height="32" alt="" />
-          &nbsp;&nbsp;&nbsp; ETH
+          <TokenLogo src={tokenLogo} height="32" alt="" />
+          &nbsp; DApp
         </IconContainer>
       </InputContainer>
       <BalanceContainer>
         <Label>Output</Label>
         <BalanceSpan>
-          Balance:
-          {window.web3.utils.fromWei(tokenBalance, "Ether")}
+          Balance: {window.web3.utils.fromWei(ethBalance, "Ether")}
         </BalanceSpan>
       </BalanceContainer>
       <InputContainer>
         <Input type="text" placeholder="0" value={outputValue} disabled />
         <IconContainer>
-          <TokenLogo src={tokenLogo} height="32" alt="" />
-          &nbsp; DApp
+          <TokenLogo src={ethLogo} height="32" alt="" />
+          &nbsp;&nbsp;&nbsp; ETH
         </IconContainer>
       </InputContainer>
       <RowContainer>
         <ExchangeRateLabel>Exchange Rate</ExchangeRateLabel>
-        <ExchangeRateValue>1 ETH = 100 DApp</ExchangeRateValue>
+        <ExchangeRateValue>100 DApp = 1 ETH</ExchangeRateValue>
       </RowContainer>
       <SwapButton type="submit">SWAP!</SwapButton>
     </Form>
   );
 };
 
-export default BuyForm;
+export default SellForm;

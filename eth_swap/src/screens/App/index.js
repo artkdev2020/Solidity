@@ -1,3 +1,4 @@
+import reduxConnector from "./reduxConnector";
 import App from "./App";
 
-export { App };
+export default reduxConnector(App);
