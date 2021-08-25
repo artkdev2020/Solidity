@@ -2,23 +2,23 @@ pragma solidity ^0.5.0;
 
 import "./Token.sol";
 
-contract EthSwap{
+contract EthSwap {
     string public name;
     Token public token;
-    uint public rate = 1000;
+    uint256 public rate = 100;
 
     event TokensPurchased(
         address account,
         address token,
-        uint amount,
-        uint rate
+        uint256 amount,
+        uint256 rate
     );
 
     event TokensSold(
         address account,
         address token,
-        uint amount,
-        uint rate
+        uint256 amount,
+        uint256 rate
     );
 
     constructor(Token _token) public {
@@ -28,8 +28,8 @@ contract EthSwap{
 
     function buyToken() public payable {
         // Calculate the number of token to buy
-        uint _tokenAmount = msg.value * rate;
-        // require that ethSwap has enough tokens 
+        uint256 _tokenAmount = msg.value * rate;
+        // require that ethSwap has enough tokens
         require(token.balanceOf(address(this)) >= _tokenAmount);
         // transfer tokens to the user
         token.transfer(msg.sender, _tokenAmount);
@@ -38,15 +38,15 @@ contract EthSwap{
         emit TokensPurchased(msg.sender, address(token), _tokenAmount, rate);
     }
 
-    function sellToken(uint _amount) public {
+    function sellToken(uint256 _amount) public {
         // user can't sell more token then they have
         require(token.balanceOf(msg.sender) >= _amount);
 
         // calculate the amount of Ether to redeem
-        uint _etherAmount = _amount / rate;
-        // have enough ether in contract 
+        uint256 _etherAmount = _amount / rate;
+        // have enough ether in contract
         require(address(this).balance >= _etherAmount);
-        // perform sale     
+        // perform sale
         token.transferFrom(msg.sender, address(this), _amount);
         msg.sender.transfer(_etherAmount);
         //

@@ -30,7 +30,6 @@ class App extends Component {
       let tokenBalance = await token.methods
         .balanceOf(this.state.account)
         .call();
-      // console.log(web3.utils.fromWei(tokenBalance.toString(), "Ether"));
       this.setState({ tokenBalance: tokenBalance.toString() });
     } else {
       window.alert("Token contract not deployed network data");
@@ -60,6 +59,16 @@ class App extends Component {
     }
   }
 
+  // setEtherBalanceInState = async etherAmount => {
+  //   const ethBalance = await window.web3.eth.getBalance(this.state.account);
+  //   const result = ethBalance - etherAmount;
+  //   this.setState({ ethBalance: result.toString() });
+  // };
+
+  // setDAppBalance = async tokenAmount => {
+  //   console.log(tokenAmount);
+  // };
+
   buyTokens = etherAmount => {
     this.setState({ loading: true });
     this.state.ethSwap.methods
@@ -67,6 +76,23 @@ class App extends Component {
       .send({ value: etherAmount, from: this.state.account })
       .on("transactionHash", hash => {
         this.setState({ loading: false });
+        // this.setBalanceInState(etherAmount);
+      });
+  };
+
+  sellTokens = tokenAmount => {
+    console.log(tokenAmount);
+    this.setState({ loading: true });
+    this.state.token.methods
+      .approve(this.state.ethSwap.address, tokenAmount)
+      .send({ from: this.state.account })
+      .on("transactionHash", hash => {
+        this.state.ethSwap.methods
+          .sellToken(tokenAmount)
+          .send({ from: this.state.account })
+          .on("transactionHash", hash => {
+            this.setState({ loading: false });
+          });
       });
   };
 
@@ -96,6 +122,7 @@ class App extends Component {
           ethBalance={this.state.ethBalance}
           tokenBalance={this.state.tokenBalance}
           buyTokens={this.buyTokens}
+          sellTokens={this.sellTokens}
         />
       );
     }
