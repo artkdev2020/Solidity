@@ -12,10 +12,6 @@ const BuyForm = props => {
     setOutput(amount * 100);
   };
 
-  // const setInputState = input => {
-  //   setInput( input);
-  // };
-
   return (
     <form
       className="mb-3"
