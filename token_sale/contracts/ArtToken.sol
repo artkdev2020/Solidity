@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.5.0;
 
-contract ArtKDevToken {
+contract ArtToken {
 
   // add Name
   string public name = 'ArtKDev';
@@ -92,19 +92,4 @@ contract ArtKDevToken {
     
     return true;
   }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

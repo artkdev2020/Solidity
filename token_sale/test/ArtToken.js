@@ -1,6 +1,6 @@
 //const { assert } = require('chai');
 
-const ArtKDevToken = artifacts.require("ArtKDevToken");
+const ArtToken = artifacts.require("ArtToken");
 
 
 /*require('chai')                             // chai
@@ -11,10 +11,10 @@ function tokens(n) {
     return web3.utils.toWei(n, 'ether')
 }
 
-contract('ArtKDevToken', (accounts) => {
+contract('ArtToken', (accounts) => {
   let token;
   before(async () => {
-    token = await ArtKDevToken.deployed();
+    token = await ArtToken.deployed();
   })
 
   it('initializes the contract with the correct values', async () => {

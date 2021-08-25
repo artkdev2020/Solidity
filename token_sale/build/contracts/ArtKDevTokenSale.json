@@ -1,0 +1,424 @@
+{
+  "contractName": "ArtKDevTokenSale",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ArtKDevTokenSale.sol\":\"ArtKDevTokenSale\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ArtKDevTokenSale.sol\":{\"keccak256\":\"0x49f449ec96d7c195b684822ecbca23e0799fe26051ba208d77a383b18f6c80aa\",\"urls\":[\"bzz-raw://799e9ca58cc91dc5af900ab5360b8d89ed1f040fa4d582c7d4f51774d2acf90b\",\"dweb:/ipfs/QmeTbnDumMFVpsHwkcekGWiZ8H163jGgtce19WpPLDkbh8\"]},\"project:/contracts/ArtToken.sol\":{\"keccak256\":\"0xfdd07a23e0344c01fd79b11324d08b4695979fdfa37fe8a40eff4f4651929691\",\"urls\":[\"bzz-raw://c4bded2e7abf06fc900fee02936c29871e9fb60488afa806c78271ae534b7ef5\",\"dweb:/ipfs/QmS5QuB7CrWgbX63pk4AyVUr7wsFfpS2h6jLGGyvhwtsEj\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550603e80605d6000396000f3fe6080604052600080fdfea265627a7a723158205176d4dfa04de32ed743e1b5cc3395d88b84b2fb12008241911ca50f8b8ee1d664736f6c63430005100032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a723158205176d4dfa04de32ed743e1b5cc3395d88b84b2fb12008241911ca50f8b8ee1d664736f6c63430005100032",
+  "sourceMap": "120:274:0:-;;;205:184;8:9:-1;5:2;;;30:1;27;20:12;5:2;205:184:0;293:10;285:5;;:18;;;;;;;;;;;;;;;;;;120:274;;;;;;",
+  "deployedSourceMap": "120:274:0:-;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.5.0;\r\n\r\nimport './ArtToken.sol';\r\n//import \"./ArtKDevToken.sol\";\r\n\r\ncontract ArtKDevTokenSale {\r\n    address admin;\r\n    //ArtToken public token;\r\n\r\n    constructor (/*ArtToken _token*/) public {\r\n        // assing an admin\r\n        admin = msg.sender;\r\n        // Token Contract\r\n        //token = _token;\r\n        // Token Price\r\n    }\r\n\r\n}",
+  "sourcePath": "D:\\Repository\\Solidity\\token_sale\\contracts\\ArtKDevTokenSale.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ArtKDevTokenSale.sol",
+    "exportedSymbols": {
+      "ArtKDevTokenSale": [
+        14
+      ]
+    },
+    "id": 15,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:0"
+      },
+      {
+        "absolutePath": "project:/contracts/ArtToken.sol",
+        "file": "./ArtToken.sol",
+        "id": 2,
+        "nodeType": "ImportDirective",
+        "scope": 15,
+        "sourceUnit": 216,
+        "src": "60:24:0",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 14,
+        "linearizedBaseContracts": [
+          14
+        ],
+        "name": "ArtKDevTokenSale",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 4,
+            "name": "admin",
+            "nodeType": "VariableDeclaration",
+            "scope": 14,
+            "src": "153:13:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 3,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "153:7:0",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 12,
+              "nodeType": "Block",
+              "src": "246:143:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 10,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 7,
+                      "name": "admin",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4,
+                      "src": "285:5:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 8,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 263,
+                        "src": "293:3:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 9,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "293:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address_payable",
+                        "typeString": "address payable"
+                      }
+                    },
+                    "src": "285:18:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 11,
+                  "nodeType": "ExpressionStatement",
+                  "src": "285:18:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 13,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "217:21:0"
+            },
+            "returnParameters": {
+              "id": 6,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "246:0:0"
+            },
+            "scope": 14,
+            "src": "205:184:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 15,
+        "src": "120:274:0"
+      }
+    ],
+    "src": "33:361:0"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/ArtKDevTokenSale.sol",
+      "exportedSymbols": {
+        "ArtKDevTokenSale": [
+          14
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.5",
+            ".0"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "33:23:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 216,
+          "absolutePath": "project:/contracts/ArtToken.sol",
+          "file": "./ArtToken.sol",
+          "scope": 15,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 2,
+        "name": "ImportDirective",
+        "src": "60:24:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            14
+          ],
+          "name": "ArtKDevTokenSale",
+          "scope": 15
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "admin",
+              "scope": 14,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "stateMutability": "nonpayable",
+                  "type": "address"
+                },
+                "id": 3,
+                "name": "ElementaryTypeName",
+                "src": "153:7:0"
+              }
+            ],
+            "id": 4,
+            "name": "VariableDeclaration",
+            "src": "153:13:0"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "scope": 14,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 5,
+                "name": "ParameterList",
+                "src": "217:21:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 6,
+                "name": "ParameterList",
+                "src": "246:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4,
+                              "type": "address",
+                              "value": "admin"
+                            },
+                            "id": 7,
+                            "name": "Identifier",
+                            "src": "285:5:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "sender",
+                              "referencedDeclaration": null,
+                              "type": "address payable"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 263,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 8,
+                                "name": "Identifier",
+                                "src": "293:3:0"
+                              }
+                            ],
+                            "id": 9,
+                            "name": "MemberAccess",
+                            "src": "293:10:0"
+                          }
+                        ],
+                        "id": 10,
+                        "name": "Assignment",
+                        "src": "285:18:0"
+                      }
+                    ],
+                    "id": 11,
+                    "name": "ExpressionStatement",
+                    "src": "285:18:0"
+                  }
+                ],
+                "id": 12,
+                "name": "Block",
+                "src": "246:143:0"
+              }
+            ],
+            "id": 13,
+            "name": "FunctionDefinition",
+            "src": "205:184:0"
+          }
+        ],
+        "id": 14,
+        "name": "ContractDefinition",
+        "src": "120:274:0"
+      }
+    ],
+    "id": 15,
+    "name": "SourceUnit",
+    "src": "33:361:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0xA9373574Ba2F790Bc9e332F6fcf183acB9Efcc3d",
+      "transactionHash": "0x1f64a603e17113dbc00d0ba04e90a0bb09f7e25b3536238484491418f00beec1"
+    }
+  },
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-08-25T12:00:51.803Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
