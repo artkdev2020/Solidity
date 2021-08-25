@@ -11,8 +11,16 @@ contract Color is ERC721, ERC721Enumerable {
     address public owner; 
     mapping(string => bool) _colorExists;
 
-    uint colorCount = 0;
-    mapping(uint => string) public colorsName;
+
+    
+    struct ColorCoin {
+        uint id;
+        uint price;
+        string name;
+        bool isForSale;
+    }
+    uint coinsCount = 0;
+    mapping(uint => ColorCoin) public coins;
 
 
     constructor() ERC721("Color", "COLOR")  {
@@ -39,6 +47,8 @@ contract Color is ERC721, ERC721Enumerable {
         colors.push(_color);
         uint _id = colors.length;
         // Call the mint function
+
+
         _mint(msg.sender, _id);
         // Color track it
         _colorExists[_color] = true;
@@ -49,14 +59,56 @@ contract Color is ERC721, ERC721Enumerable {
     }
 
     function trunsfer(
-        address _to, 
+        address _owner, 
         uint _tokenId
         ) public {
         // Require unique color
         string memory _color = colorsName[_tokenId];
+        ColorCoin coin = coins[_tokenId]; 
+
+        require(coin.isForSale);
         require(_colorExists[_color]);
-        // call transfer
-        transferFrom(msg.sender, _to, _tokenId);
+        require(msg.value >= coin.price);
+
+         // call transfer
+        _transfer(_owner, msg.sender, _tokenId);
+        // Aproval to sell
+
+        // money send
+        address(_owner).transfer(msg.value);
+
+        emit Salle(_tokenId, msg.value, _owner)
+
+    }
+
+    function Approve() {
+
+    }
+
+    function sale(
+        bool _newStatus,
+        uint _id
+        ) public {
+            require(msg.sender == _owners[_id]);
+            ColorCoin coin = coins[_id];
+            require(coin.isForSale != _newStatus);
+
+            coin.isForSale = _newStatus;
+            coins[_id] = coin;
+    }
+
+    function changePrice(
+        uint _id, 
+        uint _newPrice
+        ) public returns(bool){
+            require(msg.sender == _owners[_id]);
+            ColorCoin coin = coins[_id];
+            require(coin.price != _newPrice);
+
+            coin.price = _newPrice;
+            coins[_id] = coin;
+
+            return true;
     }
 
 
