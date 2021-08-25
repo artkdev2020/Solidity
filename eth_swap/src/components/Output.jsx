@@ -1,33 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Input.css";
 
-const Input = props => {
-  const [userInput, setUserInput] = useState("");
-
+const Output = props => {
   return (
     <div>
       <div>
         <label className="float-left">
-          <b>Input</b>
+          <b>Output</b>
         </label>
         <span className="float-right text-muted">
           Balance: {window.web3.utils.fromWei(props.balance, "Ether")}
         </span>
       </div>
-      <div className="input-group mb-4">
+      <div className="input-group mb-2">
         <input
           type="text"
-          onChange={event => {
-            const amount = userInput.value.toString();
-            props.setInput(amount);
-            props.setAmount(amount);
-          }}
-          ref={input => {
-            setUserInput(input);
-          }}
           className="form-control form-control-lg"
           placeholder="0"
-          required
+          value={props.convertedOutput}
+          disabled
         />
         <div className="input-group-append">
           <div className="input-group-text">
@@ -40,8 +31,12 @@ const Input = props => {
           </div>
         </div>
       </div>
+      <div className="mb-5">
+        <span className="float-left text-muted">Exchange Rate</span>
+        <span className="float-right text-muted">{props.currencyRate}</span>
+      </div>
     </div>
   );
 };
 
-export default Input;
+export default Output;
