@@ -61,7 +61,6 @@ const App = props => {
 
       setLoading(false);
     };
-
     loadBlockchainData();
   }, []);
 
