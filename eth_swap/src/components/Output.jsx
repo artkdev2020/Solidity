@@ -2,6 +2,9 @@ import React from "react";
 import "./Input.css";
 
 const Output = props => {
+  debugger;
+  console.log(props.balance);
+
   return (
     <div>
       <div>

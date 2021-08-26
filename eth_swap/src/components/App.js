@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./App.css";
 import Web3 from "web3";
 import Navbar from "./Navbar";
@@ -6,14 +6,57 @@ import EthSwap from "../abis/EthSwap.json";
 import Token from "../abis/Token.json";
 import Main from "./Main";
 
+const SET_ACCOUNT = "SET_ACCOUNT";
+const SET_ETH_BALANCE = "SET_ETH_BALANCE";
+const SET_TOKEN = "SET_TOKEN";
+const SET_TOKEN_BALANCE = "SET_TOKEN_BALANCE";
+const SET_ETH_SWAP = "SET_ETH_SWAP";
+const SET_LOADING = "SET_LOADING";
+
+const initialState = {
+  account: "",
+  ethBalance: "",
+  token: {},
+  tokenBalance: "",
+  ethSwap: {},
+  loading: true
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case SET_ACCOUNT:
+      return { ...state, account: action.account };
+
+    case SET_ETH_BALANCE:
+      return { ...state, ethBalance: action.ethBalance };
+
+    case SET_TOKEN:
+      return { ...state, token: action.token };
+
+    case SET_TOKEN_BALANCE:
+      return { ...state, tokenBalance: action.tokenBalance };
+
+    case SET_ETH_SWAP:
+      return { ...state, ethSwap: action.ethSwap };
+
+    case SET_LOADING:
+      return { ...state, loading: action.loading };
+
+    default:
+      throw new Error();
+  }
+};
+
 const App = props => {
-  const [account, setAccount] = useState();
-  const [ethBalance, setEthBalance] = useState();
-  const [token, setToken] = useState();
-  const [tokenBalance, setTokenBalance] = useState();
-  const [ethSwap, setEthSwap] = useState();
-  const [loading, setLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [content, setContent] = useState();
+  // const [account, setAccount] = useState();
+  // const [ethBalance, setEthBalance] = useState();
+  // const [token, setToken] = useState();
+  // const [tokenBalance, setTokenBalance] = useState();
+  // const [ethSwap, setEthSwap] = useState();
+  // const [loading, setLoading] = useState(true);
+  // const [content, setContent] = useState();
 
   useEffect(() => {
     const loadWeb3 = async () => {
@@ -35,18 +78,20 @@ const App = props => {
     const loadBlockchainData = async () => {
       const web3 = window.web3;
       const accounts = await web3.eth.getAccounts();
-      setAccount(accounts[0]);
+      dispatch({ type: SET_ACCOUNT, account: accounts[0] });
       const ethBalance = await web3.eth.getBalance(accounts[0]);
-      setEthBalance(ethBalance);
+      console.log(ethBalance);
+      dispatch({ type: SET_ETH_BALANCE, ethBalance });
 
       const networkId = await web3.eth.net.getId();
       const tokenData = Token.networks[networkId];
 
       if (tokenData) {
         const token = new web3.eth.Contract(Token.abi, tokenData.address);
-        setToken(token);
+        dispatch({ type: SET_TOKEN, token });
+
         let tokenBalance = await token.methods.balanceOf(accounts[0]).call();
-        setTokenBalance(tokenBalance.toString());
+        dispatch({ type: SET_TOKEN_BALANCE, tokenBalance });
       } else {
         window.alert("Token contract not deployed network data");
       }
@@ -54,18 +99,85 @@ const App = props => {
       const ethSwapData = EthSwap.networks[networkId];
       if (ethSwapData) {
         const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
-        setEthSwap(ethSwap);
+        dispatch({ type: SET_ETH_SWAP, ethSwap });
       } else {
         window.alert("EthSwap contract not deployed to detected network.");
       }
 
-      setLoading(false);
+      dispatch({ type: SET_LOADING, loading: false });
     };
+
     loadBlockchainData();
-  }, []);
+  }, [state.account]);
+
+  // useEffect(() => {
+  //   const loadBlockchainData = async () => {
+  //     const web3 = window.web3;
+  //     const accounts = await web3.eth.getAccounts();
+  //     dispatch({ type: SET_ACCOUNT, account: accounts[0] });
+  //     console.log(state.account);
+  //     // setAccount(accounts[0]);
+  //     // const ethBalance = await web3.eth.getBalance(accounts[0]);
+  //     // setEthBalance(ethBalance);
+
+  //     // const networkId = await web3.eth.net.getId();
+  //     // const tokenData = Token.networks[networkId];
+
+  //     // if (tokenData) {
+  //     //   const token = new web3.eth.Contract(Token.abi, tokenData.address);
+  //     //   setToken(token);
+  //     //   let tokenBalance = await token.methods.balanceOf(accounts[0]).call();
+  //     //   setTokenBalance(tokenBalance.toString());
+  //     // } else {
+  //     //   window.alert("Token contract not deployed network data");
+  //     // }
+
+  //     // const ethSwapData = EthSwap.networks[networkId];
+  //     // if (ethSwapData) {
+  //     //   const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
+  //     //   setEthSwap(ethSwap);
+  //     // } else {
+  //     //   window.alert("EthSwap contract not deployed to detected network.");
+  //     // }
+
+  //     // setLoading(false);
+  //   };
+
+  // const loadBlockchainData = async () => {
+  //   const web3 = window.web3;
+  //   const accounts = await web3.eth.getAccounts();
+  //   setAccount(accounts[0]);
+  //   const ethBalance = await web3.eth.getBalance(accounts[0]);
+  //   setEthBalance(ethBalance);
+
+  //   const networkId = await web3.eth.net.getId();
+  //   const tokenData = Token.networks[networkId];
+
+  //   if (tokenData) {
+  //     const token = new web3.eth.Contract(Token.abi, tokenData.address);
+  //     setToken(token);
+  //     let tokenBalance = await token.methods.balanceOf(accounts[0]).call();
+  //     setTokenBalance(tokenBalance.toString());
+  //   } else {
+  //     window.alert("Token contract not deployed network data");
+  //   }
+
+  //   const ethSwapData = EthSwap.networks[networkId];
+  //   if (ethSwapData) {
+  //     const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
+  //     setEthSwap(ethSwap);
+  //   } else {
+  //     window.alert("EthSwap contract not deployed to detected network.");
+  //   }
+
+  //   setLoading(false);
+  // };
+  //   loadBlockchainData();
+  // }, []);
 
   useEffect(() => {
-    if (loading) {
+    console.log(state.loading);
+    if (state.loading) {
       setContent(
         <p id="loader" className="text-center">
           Loading...
@@ -74,43 +186,43 @@ const App = props => {
     } else {
       setContent(
         <Main
-          ethBalance={ethBalance}
-          tokenBalance={tokenBalance}
+          ethBalance={state.ethBalance}
+          tokenBalance={state.tokenBalance}
           buyTokens={buyTokens}
           sellTokens={sellTokens}
         />
       );
     }
-  }, [loading]);
+  }, [state.loading]);
 
   const buyTokens = etherAmount => {
-    setLoading(true);
-    ethSwap.methods
+    dispatch({ type: SET_LOADING, loading: true });
+    state.ethSwap.methods
       .buyToken()
-      .send({ value: etherAmount, from: account })
+      .send({ value: etherAmount, from: state.account })
       .on("transactionHash", hash => {
-        setLoading(false);
+        dispatch({ type: SET_LOADING, loading: false });
       });
   };
 
   const sellTokens = tokenAmount => {
-    setLoading(true);
-    token.methods
-      .approve(ethSwap.address, tokenAmount)
-      .send({ from: account })
+    dispatch({ type: SET_LOADING, loading: true });
+    state.token.methods
+      .approve(state.ethSwap.address, tokenAmount)
+      .send({ from: state.account })
       .on("transactionHash", hash => {
-        ethSwap.methods
+        state.ethSwap.methods
           .sellToken(tokenAmount)
-          .send({ from: account })
+          .send({ from: state.account })
           .on("transactionHash", hash => {
-            setLoading(false);
+            dispatch({ type: SET_LOADING, loading: false });
           });
       });
   };
 
   return (
     <div>
-      <Navbar account={account} />
+      <Navbar account={state.account} />
       <div className="container-fluid mt-5">
         <div className="row">
           <main
@@ -127,3 +239,7 @@ const App = props => {
 };
 
 export default App;
+
+{
+  /* <div className="content mr-auto ml-auto">{content}</div> */
+}
