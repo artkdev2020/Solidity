@@ -11,7 +11,8 @@ const Input = props => {
           <b>Input</b>
         </label>
         <span className="float-right text-muted">
-          Balance: {window.web3.utils.fromWei(props.balance, "Ether")}
+          Balance:{" "}
+          {window.web3.utils.fromWei(props.balance.toString(), "Ether")}
         </span>
       </div>
       <div className="input-group mb-4">
@@ -33,7 +34,7 @@ const Input = props => {
           <div className="input-group-text">
             <div className="row width_group_iput">
               <div className="col-5">
-                <img src={props.logo} height="30" alt="" />
+                <img src={props.logo} height="30" width="30" alt="" />
               </div>
               <div className="col align-self-center">{props.currency}</div>
             </div>

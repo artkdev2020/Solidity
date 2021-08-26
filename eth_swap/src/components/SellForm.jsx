@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import tokenLogo from "../token-logo.png";
+import tokenLogo from "../AKD_LOGO.png";
 import ethLogo from "../eth-logo.png";
 import Input from "./Input";
 import Output from "./Output";
@@ -27,13 +27,13 @@ const SellForm = props => {
         setAmount={setOutputState}
         setInput={setInput}
         logo={tokenLogo}
-        currency={"DApp"}
+        currency={"AKD"}
       />
       <Output
         balance={props.ethBalance}
         convertedOutput={output}
         logo={ethLogo}
-        currencyRate={"100 DApp = 1 ETH"}
+        currencyRate={"100 AKD = 1 ETH"}
         currency={"ETH"}
       />
 

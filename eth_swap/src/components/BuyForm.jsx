@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import tokenLogo from "../token-logo.png";
+import tokenLogo from "../AKD_LOGO.png";
 import ethLogo from "../eth-logo.png";
 import Input from "./Input";
 import Output from "./Output";
@@ -33,8 +33,8 @@ const BuyForm = props => {
         balance={props.tokenBalance}
         convertedOutput={output}
         logo={tokenLogo}
-        currencyRate={"1 ETH = 100 DApp"}
-        currency={"DApp"}
+        currencyRate={"1 ETH = 100 AKD"}
+        currency={"AKD"}
       />
 
       <button type="submit" className="btn btn-primary btn-block btn-lg">
