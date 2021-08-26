@@ -50,14 +50,6 @@ const reducer = (state, action) => {
 const App = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [content, setContent] = useState();
-  // const [account, setAccount] = useState();
-  // const [ethBalance, setEthBalance] = useState();
-  // const [token, setToken] = useState();
-  // const [tokenBalance, setTokenBalance] = useState();
-  // const [ethSwap, setEthSwap] = useState();
-  // const [loading, setLoading] = useState(true);
-  // const [content, setContent] = useState();
-
   useEffect(() => {
     const loadWeb3 = async () => {
       if (window.ethereum) {
@@ -110,71 +102,6 @@ const App = props => {
     loadBlockchainData();
   }, [state.account]);
 
-  // useEffect(() => {
-  //   const loadBlockchainData = async () => {
-  //     const web3 = window.web3;
-  //     const accounts = await web3.eth.getAccounts();
-  //     dispatch({ type: SET_ACCOUNT, account: accounts[0] });
-  //     console.log(state.account);
-  //     // setAccount(accounts[0]);
-  //     // const ethBalance = await web3.eth.getBalance(accounts[0]);
-  //     // setEthBalance(ethBalance);
-
-  //     // const networkId = await web3.eth.net.getId();
-  //     // const tokenData = Token.networks[networkId];
-
-  //     // if (tokenData) {
-  //     //   const token = new web3.eth.Contract(Token.abi, tokenData.address);
-  //     //   setToken(token);
-  //     //   let tokenBalance = await token.methods.balanceOf(accounts[0]).call();
-  //     //   setTokenBalance(tokenBalance.toString());
-  //     // } else {
-  //     //   window.alert("Token contract not deployed network data");
-  //     // }
-
-  //     // const ethSwapData = EthSwap.networks[networkId];
-  //     // if (ethSwapData) {
-  //     //   const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
-  //     //   setEthSwap(ethSwap);
-  //     // } else {
-  //     //   window.alert("EthSwap contract not deployed to detected network.");
-  //     // }
-
-  //     // setLoading(false);
-  //   };
-
-  // const loadBlockchainData = async () => {
-  //   const web3 = window.web3;
-  //   const accounts = await web3.eth.getAccounts();
-  //   setAccount(accounts[0]);
-  //   const ethBalance = await web3.eth.getBalance(accounts[0]);
-  //   setEthBalance(ethBalance);
-
-  //   const networkId = await web3.eth.net.getId();
-  //   const tokenData = Token.networks[networkId];
-
-  //   if (tokenData) {
-  //     const token = new web3.eth.Contract(Token.abi, tokenData.address);
-  //     setToken(token);
-  //     let tokenBalance = await token.methods.balanceOf(accounts[0]).call();
-  //     setTokenBalance(tokenBalance.toString());
-  //   } else {
-  //     window.alert("Token contract not deployed network data");
-  //   }
-
-  //   const ethSwapData = EthSwap.networks[networkId];
-  //   if (ethSwapData) {
-  //     const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
-  //     setEthSwap(ethSwap);
-  //   } else {
-  //     window.alert("EthSwap contract not deployed to detected network.");
-  //   }
-
-  //   setLoading(false);
-  // };
-  //   loadBlockchainData();
-  // }, []);
-
   useEffect(() => {
     console.log(state.loading);
     if (state.loading) {
@@ -186,8 +113,8 @@ const App = props => {
     } else {
       setContent(
         <Main
-          ethBalance={state.ethBalance}
-          tokenBalance={state.tokenBalance}
+          ethBalance={state.ethBalance.toString()}
+          tokenBalance={state.tokenBalance.toString()}
           buyTokens={buyTokens}
           sellTokens={sellTokens}
         />
@@ -239,7 +166,3 @@ const App = props => {
 };
 
 export default App;
-
-{
-  /* <div className="content mr-auto ml-auto">{content}</div> */
-}

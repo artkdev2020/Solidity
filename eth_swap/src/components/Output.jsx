@@ -12,8 +12,7 @@ const Output = props => {
           <b>Output</b>
         </label>
         <span className="float-right text-muted">
-          Balance:{" "}
-          {window.web3.utils.fromWei(props.balance.toString(), "Ether")}
+          Balance: {window.web3.utils.fromWei(props.balance, "Ether")}
         </span>
       </div>
       <div className="input-group mb-2">
