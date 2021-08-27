@@ -2306,12 +2306,12 @@
       "events": {},
       "links": {},
 <<<<<<< HEAD
-      "address": "0xCd40Cf7A996C6d8db7b896cf4bfBEf20Cd44b433",
-      "transactionHash": "0x80e83df90fd3762e5cc95c02f82c462b75d92fb0d7fd850514eab19ebd50cd2f"
+      "address": "0xF1e741E9CFeb7F07bAE1F20Bf15D72409033fB76",
+      "transactionHash": "0xd62880d0018fef4c93e7eb1ebba21f050e6fc6735230bb450e6d13b01ddc8fe2"
     }
   },
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2021-08-17T07:03:24.888Z",
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-08-18T07:40:44.499Z",
   "networkType": "ethereum",
 =======
       "address": "0xDFfB4faf8B0c88987319518BE903F3fa686ec271",
@@ -2320,7 +2320,7 @@
   },
   "schemaVersion": "3.4.3",
   "updatedAt": "2021-08-17T09:48:37.630Z",
->>>>>>> 92e907f
+>>>>>>> origin/kv-nft-dev
   "devdoc": {
     "kind": "dev",
     "methods": {},
