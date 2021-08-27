@@ -1,5 +1,12 @@
 /* Styles go here */
 
 img {
-    width: 600px;
+  width: 600px;
+}
+
+.token {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  display: inline-block;
 }

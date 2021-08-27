@@ -1,51 +1,43 @@
-import React, { Component } from 'react';
-import logo from '../logo.png';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Navbar from "./Navbar";
+import PageColors from "./page_colors/PageColors";
+import { Web3Api } from "../api/api";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <a
-            className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="http://artkdev.online"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ArtKDev
-          </a>
-        </nav>
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
-              <div className="content mr-auto ml-auto">
-                <a
-                  href="http://artkdev.online"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logo} className="App-logo" alt="logo" />
-                </a>
-                <h1>Starter Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="http://www.rtkdev.online"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  GO TO SITE <u><b>NOW! </b></u>
-                </a>
-              </div>
-            </main>
-          </div>
-        </div>
-      </div>
+const App = () => {
+  let [account, setAccount] = useState(null);
+  let [contract, setContract] = useState({});
+  let [totalSupply, setTotalSupply] = useState(0);
+  let [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    Web3Api.loadWeb3();
+  }, []);
+
+  useEffect(() => {
+    Web3Api.loadBlockchainData(
+      setAccount,
+      setContract,
+      setTotalSupply,
+      setColors
     );
-  }
-}
+  }, []);
+
+  const mint = color => {
+    contract.methods
+      .mint(color)
+      .send({ from: account })
+      .once("receipt", receipt => {
+        setColors([...colors, color]);
+      });
+  };
+
+  return (
+    <div className="container-fluid">
+      <Navbar account={account} />
+      <PageColors mint={mint} colors={colors} />
+    </div>
+  );
+};
 
 export default App;
