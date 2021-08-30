@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BuyForm, SellForm } from "./components";
+import React from "react";
+import { BuyForm, SellForm } from "../Forms";
 
 import {
   Container,
@@ -10,15 +10,13 @@ import {
   CardContent,
 } from "./styles";
 
-const Main = () => {
-  const [currentForm, setCurrentForm] = useState("buy");
-
+const Main = ({ currentForm, changeCurrentForm }) => {
   return (
     <Container id="content">
       <ButtonsContainer>
-        <Button onClick={() => setCurrentForm("buy")}>Buy</Button>
+        <Button onClick={() => changeCurrentForm("buy")}>Buy</Button>
         <Arrows>&lt; &nbsp; &gt;</Arrows>
-        <Button onClick={() => setCurrentForm("sell")}>Sell</Button>
+        <Button onClick={() => changeCurrentForm("sell")}>Sell</Button>
       </ButtonsContainer>
 
       <CardContainer>

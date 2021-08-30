@@ -1,3 +1,4 @@
+import reduxConnector from "./reduxConnector";
 import Main from "./Main";
 
-export { Main };
+export default reduxConnector(Main);

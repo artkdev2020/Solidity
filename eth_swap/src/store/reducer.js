@@ -6,7 +6,6 @@ export const slice = createSlice({
     status: {
       loading: true,
       web3Loaded: false,
-      blockchainLoaded: false,
     },
     web3Info: {
       account: "",
@@ -15,6 +14,11 @@ export const slice = createSlice({
       ethBalance: "0",
       tokenBalance: "0",
     },
+    calculatedBalance: {
+      eth: "0",
+      token: "0",
+    },
+    currentForm: "buy",
   },
   reducers: {
     startLoading: (state) => {
@@ -28,12 +32,6 @@ export const slice = createSlice({
     },
     loadWeb3Failed: (state) => {
       state.status.web3Loaded = false;
-    },
-    loadBlockchainSuccess: (state) => {
-      state.status.blockchainLoaded = true;
-    },
-    loadBlockchainFailed: (state) => {
-      state.status.blockchainLoaded = false;
     },
     loadBlockchainDataSuccess: (state, action) => {
       state.web3Info.account = action.payload.account;
@@ -49,6 +47,15 @@ export const slice = createSlice({
       state.web3Info.ethBalance = "0";
       state.web3Info.tokenBalance = "0";
     },
+    setEthBalance: (state, action) => {
+      state.calculatedBalance.eth = action.payload.ethBalance;
+    },
+    setTokenBalance: (state, action) => {
+      state.calculatedBalance.token = action.payload.tokenBalance;
+    },
+    setCurrentForm: (state, action) => {
+      state.currentForm = action.payload.currentForm;
+    },
   },
 });
 
@@ -57,10 +64,11 @@ export const {
   endLoading,
   loadWeb3Success,
   loadWeb3Failed,
-  loadBlockchainSuccess,
-  loadBlockchainFailed,
   loadBlockchainDataSuccess,
   loadBlockchainDataFailed,
+  setEthBalance,
+  setTokenBalance,
+  setCurrentForm,
 } = slice.actions;
 
 export default slice.reducer;
