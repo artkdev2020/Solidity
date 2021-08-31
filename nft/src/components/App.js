@@ -9,6 +9,7 @@ const App = () => {
   let [contract, setContract] = useState({});
   let [totalSupply, setTotalSupply] = useState(0);
   let [colors, setColors] = useState([]);
+  let [owner, setOwner] = useState("");
 
   useEffect(() => {
     Web3Api.loadWeb3();
@@ -19,24 +20,36 @@ const App = () => {
       setAccount,
       setContract,
       setTotalSupply,
-      setColors
+      setColors,
+      setOwner
     );
   }, []);
 
   const mint = (color) => {
-    console.log(account);
-    contract.methods
-      .mint(color)
-      .send({ from: account })
-      .once("receipt", (receipt) => {
-        setColors([...colors, color]);
-      });
+    contract.methods.mint(color).send({ from: account });
+    // .once("receipt", (receipt) => {
+    //   setColors([...colors, color]);
+    // });
+  };
+
+  const putUpForSale = (id, sold) => {
+    contract.methods.sale(id, sold).send({ from: account });
+  };
+
+  const newPrice = (id, newPrice) => {
+    contract.methods.changePrice(id, newPrice).send({ from: account });
   };
 
   return (
     <div className="container-fluid">
       <Navbar account={account} />
-      <PageColors mint={mint} colors={colors} />
+      <PageColors
+        owner={owner}
+        newPrice={newPrice}
+        putUpForSale={putUpForSale}
+        mint={mint}
+        colors={colors}
+      />
     </div>
   );
 };
