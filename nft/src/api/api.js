@@ -32,7 +32,6 @@ export const Web3Api = {
 
     if (networkData) {
       const abi = Color.abi;
-      console.log(abi);
       const address = networkData.address;
       const contract = new web3.eth.Contract(abi, address);
 
@@ -43,25 +42,10 @@ export const Web3Api = {
 
       let result = [];
       for (let i = 1; i < totalSupply; i++) {
-        // const color = await contract.methods.colors(i).call();
         result.push(await contract.methods.coins(i).call());
       }
       setColors(result);
       setOwner(await contract.methods.owner().call());
-
-      // console.log(result);
-
-      // const resCoins = [];
-
-      // for (let i = 0; i < totalSupply; i++) {
-      //   resCoins.push(await contract.methods.coins(i).call());
-      // }
-
-      // resCoins.forEach((item) => {
-      //   console.log(parseInt(item.id));
-      //   console.log(item.name);
-      //   console.log(parseInt(item.price));
-      // });
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }
