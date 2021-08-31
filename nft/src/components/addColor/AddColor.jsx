@@ -1,7 +1,7 @@
 import React from "react";
 import useInput from "../../hooks/useInput";
 
-const AddColor = props => {
+const AddColor = (props) => {
   // let [color, setColor] = useState({});
   const inputColor = useInput("", { isColor: true });
   const inputIsEmpty = useInput("", { isEmpty: true });
@@ -10,7 +10,7 @@ const AddColor = props => {
     <div className="content mr-auto ml-auto">
       <h1>Issue Token</h1>
       <form
-        onSubmit={event => {
+        onSubmit={(event) => {
           event.preventDefault();
           props.mint(inputColor.value);
         }}
@@ -26,11 +26,11 @@ const AddColor = props => {
           className="form-control mb-1"
           placeholder="e.g. #fff or #ff00ff"
           value={inputColor.value}
-          onChange={e => {
+          onChange={(e) => {
             inputColor.onChange(e);
             inputIsEmpty.onChange(e);
           }}
-          onBlur={e => {
+          onBlur={(e) => {
             inputColor.onBlur(e);
             inputIsEmpty.onBlur(e);
           }}

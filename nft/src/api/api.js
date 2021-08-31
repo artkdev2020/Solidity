@@ -43,5 +43,5 @@ export const Web3Api = {
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }
-  }
+  },
 };

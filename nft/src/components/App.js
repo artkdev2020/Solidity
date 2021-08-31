@@ -23,11 +23,12 @@ const App = () => {
     );
   }, []);
 
-  const mint = color => {
+  const mint = (color) => {
+    console.log(account);
     contract.methods
       .mint(color)
       .send({ from: account })
-      .once("receipt", receipt => {
+      .once("receipt", (receipt) => {
         setColors([...colors, color]);
       });
   };
