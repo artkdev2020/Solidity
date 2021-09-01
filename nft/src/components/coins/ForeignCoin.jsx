@@ -19,6 +19,14 @@ const ForeignCoin = (props) => {
           {"Is for sale: " + props.coin.isForSale.toString()}
         </li>
       </ul>
+      <button
+        onClick={() => {
+          props.transfer(props.ownerAddress, props.coin.id);
+        }}
+        className="btn btn-primary"
+      >
+        Buy
+      </button>
     </div>
   );
 };

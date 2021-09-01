@@ -15,6 +15,7 @@ const PageCoins = (props) => {
           newPrice={props.newPrice}
           putUpForSale={props.putUpForSale}
           mint={props.mint}
+          transfer={props.transfer}
           coins={props.coins}
         />
       );
@@ -27,6 +28,7 @@ const PageCoins = (props) => {
           newPrice={props.newPrice}
           putUpForSale={props.putUpForSale}
           mint={props.mint}
+          transfer={props.transfer}
           coins={props.coins}
         />
       );

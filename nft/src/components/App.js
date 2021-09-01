@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./Navbar";
-import PageColors from "./page_colors/PageColors";
 import { Web3Api } from "../api/api";
 import PageCoins from "./coins/PageCoins";
 
 const App = () => {
   let [account, setAccount] = useState(null);
   let [contract, setContract] = useState({});
+  // eslint-disable-next-line no-unused-vars
   let [totalSupply, setTotalSupply] = useState(0);
   let [colors, setColors] = useState([]);
   let [ownerContract, setOwnerContract] = useState("");
@@ -41,6 +41,13 @@ const App = () => {
     contract.methods.changePrice(id, newPrice).send({ from: account });
   };
 
+  const transfer = (ownerAddress, tokenId) => {
+    console.log(ownerAddress, parseInt(tokenId));
+    // contract.methods
+    //   .transfer(ownerAddress, parseInt(tokenId))
+    //   .send({ from: account });
+  };
+
   return (
     <div className="container-fluid">
       <Navbar account={account} />
@@ -52,6 +59,7 @@ const App = () => {
           newPrice={newPrice}
           putUpForSale={putUpForSale}
           mint={mint}
+          transfer={transfer}
           coins={colors}
         />
       </div>
@@ -60,14 +68,3 @@ const App = () => {
 };
 
 export default App;
-
-{
-  /* <PageColors
-        account={account}
-        ownerContract={ownerContract}
-        newPrice={newPrice}
-        putUpForSale={putUpForSale}
-        mint={mint}
-        colors={colors}
-      /> */
-}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import AddColor from "./../addColor/AddColor";
 import ColorComponent from "./../ColorComponent";
@@ -17,6 +18,7 @@ const PageColors = (props) => {
               owner={props.owner}
               newPrice={props.newPrice}
               putUpForSale={props.putUpForSale}
+              transfer={props.transfer}
               color={color}
               key={k}
             />

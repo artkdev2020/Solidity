@@ -46,7 +46,6 @@ export const Web3Api = {
       }
       setColors(result);
       setOwnerContract(await contract.methods.owner().call());
-      // console.log(accounts[0]);
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }

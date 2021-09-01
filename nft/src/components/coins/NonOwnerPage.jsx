@@ -12,6 +12,7 @@ const NonOwnerPage = (props) => {
               contract={props.contract}
               newPrice={props.newPrice}
               putUpForSale={props.putUpForSale}
+              transfer={props.transfer}
               coin={coin}
               key={k}
             />
