@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const ColorComponent = (props) => {
+  let [ownerCoin, setOwner] = useState();
+
+  useEffect(() => {
+    // console.log(props.contract.methods.ownerOf(props.color.id).call());
+    props.contract.methods
+      .ownerOf(props.color.id)
+      .call()
+      .then((r) => {
+        console.log(r);
+      });
+  });
+
   return (
     <div className="card ml-2 mt-2">
       <div className="card-body">

@@ -1,9 +1,8 @@
 import React from "react";
 import AddColor from "./../addColor/AddColor";
-import ColorComponent from "./../ColorComponent";
-import PageCoins from "./../coins/PageCoins";
+import RouterCoin from "./RouterCoins";
 
-const PageColors = (props) => {
+const OwnerPage = (props) => {
   return (
     <div className="container mt-5">
       <div className="row text-center">
@@ -11,13 +10,14 @@ const PageColors = (props) => {
       </div>
       <hr />
       <div className="row justify-content-between">
-        {props.colors.map((color, k) => {
+        {props.coins.map((coin, k) => {
           return (
-            <ColorComponent
-              owner={props.owner}
+            <RouterCoin
+              account={props.account}
+              contract={props.contract}
               newPrice={props.newPrice}
               putUpForSale={props.putUpForSale}
-              color={color}
+              coin={coin}
               key={k}
             />
           );
@@ -27,4 +27,4 @@ const PageColors = (props) => {
   );
 };
 
-export default PageColors;
+export default OwnerPage;

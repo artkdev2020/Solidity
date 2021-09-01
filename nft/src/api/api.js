@@ -20,7 +20,7 @@ export const Web3Api = {
     setContract,
     setTotalSupply,
     setColors,
-    setOwner
+    setOwnerContract
   ) {
     const web3 = window.web3;
 
@@ -45,7 +45,8 @@ export const Web3Api = {
         result.push(await contract.methods.coins(i).call());
       }
       setColors(result);
-      setOwner(await contract.methods.owner().call());
+      setOwnerContract(await contract.methods.owner().call());
+      // console.log(accounts[0]);
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }
