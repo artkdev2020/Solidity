@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ForeignCoin from "./ForeignCoin";
 import MyCoin from "./MyCoin";
+import NoSaleCoin from "./NoSaleCoin";
 
 const RouterCoin = (props) => {
   let [coinComponent, setCoinComponent] = useState();
@@ -20,6 +21,7 @@ const RouterCoin = (props) => {
             newPrice={props.newPrice}
             putUpForSale={props.putUpForSale}
             transfer={props.transfer}
+            account={props.account}
           />
         );
       } else {
@@ -32,7 +34,13 @@ const RouterCoin = (props) => {
             />
           );
         } else {
-          setCoinComponent(<></>);
+          setCoinComponent(
+            <NoSaleCoin
+              coin={props.coin}
+              ownerAddress={ownerAddress}
+              account={props.account}
+            />
+          );
         }
       }
     };

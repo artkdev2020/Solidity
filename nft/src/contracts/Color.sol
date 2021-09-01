@@ -100,6 +100,7 @@ contract Color is ERC721, ERC721Enumerable {
         _owner.transfer(msg.value);
         // for sale is false
         _coin.isForSale = false;
+        coins[_tokenId] = _coin;
         // event
         emit Sale(_tokenId, msg.value, _owner);
     }

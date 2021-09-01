@@ -12,7 +12,6 @@ const AddColor = (props) => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          console.log("inputColor: ", inputColor.value);
           props.mint(inputColor.value);
         }}
       >

@@ -1,12 +1,11 @@
 import React from "react";
 
-const ForeignCoin = (props) => {
-  const buyCoin = () => {
+const NoSaleCoin = (props) => {
+  const setRate = () => {
     let amount = props.coin.price;
     let result = prompt("Enter amount please", amount);
     if (result >= props.coin.price) {
-      let tipAmount = window.web3.utils.toWei(`${result}`, "Ether");
-      props.transfer(props.ownerAddress, props.coin.id, tipAmount);
+      localStorage.setItem(props.coin.id, props.ownerAddress);
     }
   };
 
@@ -25,17 +24,11 @@ const ForeignCoin = (props) => {
           {"Price: " + parseInt(props.coin.price) + " Eth"}
         </li>
       </ul>
-      <button onClick={buyCoin} className="btn btn-primary">
-        Buy
+      <button onClick={setRate} className="btn btn-primary">
+        Rate
       </button>
     </div>
   );
 };
 
-export default ForeignCoin;
-
-{
-  /* <li className="list-group-item">
-          {"Is for sale: " + props.coin.isForSale.toString()}
-        </li> */
-}
+export default NoSaleCoin;

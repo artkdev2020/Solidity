@@ -41,8 +41,8 @@ export const Web3Api = {
       setTotalSupply(totalSupply);
 
       let result = [];
-      for (let i = 1; i < totalSupply; i++) {
-        result.push(await contract.methods.coins(i).call());
+      for (let i = 0; i < totalSupply; i++) {
+        result.push(await contract.methods.coins(i + 1).call());
       }
       setColors(result);
       setOwnerContract(await contract.methods.owner().call());

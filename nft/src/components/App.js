@@ -7,6 +7,7 @@ import PageCoins from "./coins/PageCoins";
 const App = () => {
   let [account, setAccount] = useState(null);
   let [contract, setContract] = useState({});
+  // let [update, setUpdate] = useState({});
   // eslint-disable-next-line no-unused-vars
   let [totalSupply, setTotalSupply] = useState(0);
   let [colors, setColors] = useState([]);
@@ -26,26 +27,46 @@ const App = () => {
     );
   }, []);
 
+  useEffect(() => {
+    window.ethereum.on("accountsChanged", function (account) {
+      window.location.reload();
+    });
+  }, []);
+
   const mint = (color) => {
-    contract.methods.mint(color).send({ from: account });
-    // .once("receipt", (receipt) => {
-    //   setColors([...colors, color]);
-    // });
+    contract.methods
+      .mint(color)
+      .send({ from: account })
+      .on("confirmation", () => {
+        window.location.reload();
+      });
   };
 
   const putUpForSale = (id, sold) => {
-    contract.methods.sale(id, sold).send({ from: account });
+    contract.methods
+      .sale(id, sold)
+      .send({ from: account })
+      .on("confirmation", () => {
+        window.location.reload();
+      });
   };
 
-  const newPrice = (id, newPrice) => {
-    contract.methods.changePrice(id, newPrice).send({ from: account });
+  const newPrice = (id, newPrice, amount) => {
+    contract.methods
+      .changePrice(id, newPrice)
+      .send({ from: account, value: amount })
+      .on("confirmation", () => {
+        window.location.reload();
+      });
   };
 
-  const transfer = (ownerAddress, tokenId) => {
-    console.log(ownerAddress, parseInt(tokenId));
-    // contract.methods
-    //   .transfer(ownerAddress, parseInt(tokenId))
-    //   .send({ from: account });
+  const transfer = (ownerAddress, tokenId, amount) => {
+    contract.methods
+      .transfer(ownerAddress, parseInt(tokenId))
+      .send({ from: account, value: amount })
+      .on("confirmation", () => {
+        window.location.reload();
+      });
   };
 
   return (
