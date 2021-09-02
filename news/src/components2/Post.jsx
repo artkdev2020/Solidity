@@ -35,7 +35,8 @@ const Post = props => {
             name={props.post.id}
             onClick={event => {
               let tipAmount = window.web3.utils.toWei("0.1", "Ether");
-              props.tipPost(event.target.name, tipAmount);
+              console.log(tipAmount);
+              // props.tipPost(event.target.name, tipAmount);
             }}
           >
             TIP 0.1 ETH
