@@ -33,7 +33,7 @@ const Form = ({ colors, mint }) => {
     let exists = false;
 
     colors.forEach((c) => {
-      if (c === color) {
+      if (c.name === color) {
         exists = true;
       }
     });
@@ -60,8 +60,14 @@ const Form = ({ colors, mint }) => {
         value={inputColor}
         onChange={handleValidation}
       />
-      <button className="btn btn-block btn-primary">MINT</button>
-      <button className="btn btn-block btn-primary" onClick={handleClick}>
+      <button className="btn btn-block btn-primary" type="submit">
+        MINT
+      </button>
+      <button
+        className="btn btn-block btn-primary"
+        onClick={handleClick}
+        type="button"
+      >
         PICK COLOR
       </button>
       {displayColorPicker ? (

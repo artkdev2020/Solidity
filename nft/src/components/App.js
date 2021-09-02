@@ -12,6 +12,19 @@ const App = () => {
   const [totalSupply, setTotalSupply] = useState();
   const [colors, setColors] = useState([]);
 
+  const fetchColors = async () => {
+    let _colors = [];
+
+    for (var i = 0; i < totalSupply; i++) {
+      const _color = await contract.methods.coins(i + 1).call();
+      _colors.push(_color);
+    }
+
+    console.log(_colors);
+
+    setColors(_colors);
+  };
+
   useEffect(() => {
     const loadWeb3 = async () => {
       if (window.ethereum) {
@@ -34,6 +47,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    fetchColors();
+  }, [totalSupply]);
+
+  useEffect(() => {
     const loadBlockchainData = async () => {
       const { web3 } = window;
       const _accounts = await web3.eth.getAccounts();
@@ -44,15 +61,8 @@ const App = () => {
       if (networkData) {
         const _contract = new web3.eth.Contract(Color.abi, networkData.address);
         const _totalSupply = await _contract.methods.totalSupply().call();
-        let _colors = [];
-        for (var i = 0; i < _totalSupply; i++) {
-          const _color = await _contract.methods.colors(i).call();
-          _colors.push(_color);
-        }
-
         setContract(_contract);
         setTotalSupply(_totalSupply);
-        setColors(_colors);
       } else {
         window.alert(
           "Social Network contract not deployed to detected network"
@@ -70,11 +80,27 @@ const App = () => {
     contract.methods
       .mint(color)
       .send({ from: account })
-      .on("receipt", (receipt) => {
-        console.log("receipt: ", receipt);
-      })
+      .on("confirmation", async (confirmation) => {
+        const _totalSupply = await contract.methods.totalSupply().call();
+        setTotalSupply(_totalSupply);
+      });
+  };
+
+  const saleCoin = (color) => {
+    contract.methods
+      .sale(color.id, !color.isForSale)
+      .send({ from: account })
       .on("confirmation", (confirmation) => {
-        setColors(_colors);
+        fetchColors();
+      });
+  };
+
+  const buyCoin = (color) => {
+    contract.methods
+      .transfer(color.owner, color.id)
+      .send({ from: account })
+      .on("confirmation", (confirmation) => {
+        fetchColors();
       });
   };
 
@@ -93,7 +119,15 @@ const App = () => {
         <hr />
         <div className="row text-center">
           {colors.map((color, k) => {
-            return <Token key={k} color={color} />;
+            return (
+              <Token
+                key={k}
+                color={color}
+                account={account}
+                saleCoin={saleCoin}
+                buyCoin={buyCoin}
+              />
+            );
           })}
         </div>
       </div>
