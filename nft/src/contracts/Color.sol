@@ -72,15 +72,13 @@ contract Color is ERC721, ERC721Enumerable {
     function changePrice(
         uint _id, 
         uint _newPrice
-        ) public returns(bool){
+        ) public {
             require(msg.sender == ownerOf(_id));
             ColorCoin memory coin = coins[_id];
             require(coin.price != _newPrice);
 
             coin.price = _newPrice;
             coins[_id] = coin;
-
-            return true;
     }
 
      function transfer(
@@ -93,7 +91,7 @@ contract Color is ERC721, ERC721Enumerable {
 
         require(_coin.isForSale);
         require(_colorExists[_color]);
-        require(msg.value >= _coin.price);
+        require(msg.value == _coin.price);
 
          // call transfer
         _transfer(_owner, msg.sender, _tokenId);
@@ -104,11 +102,4 @@ contract Color is ERC721, ERC721Enumerable {
         // event
         emit Sale(_tokenId, msg.value, _owner);
     }
-
-    /*function Approve() {
-
-    }*/
-
-  
-
 }

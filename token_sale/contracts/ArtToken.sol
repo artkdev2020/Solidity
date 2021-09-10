@@ -10,7 +10,7 @@ contract ArtToken {
   // add standart (my spacification)
   string public standard = 'ArtKDev Token v1.0';
   // add decimal
-  uint8 public decimal = 4;
+  uint8 public decimals = 18;
   uint public totalSupply;
 
   mapping(address => uint) internal balance;

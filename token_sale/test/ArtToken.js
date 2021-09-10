@@ -13,11 +13,13 @@ function tokens(n) {
 
 contract('ArtToken', (accounts) => {
   let token;
-  before(async () => {
+  /*before(async () => {
     token = await ArtToken.deployed();
-  })
+  })*/
 
   it('initializes the contract with the correct values', async () => {
+    token = await ArtToken.deployed();
+    //console.log(token)
     tokenName = await token.name()
     assert.equal(tokenName, 'ArtKDev', 'has is correct name')
     tokenSymbol = await token.symbol()
@@ -29,6 +31,7 @@ contract('ArtToken', (accounts) => {
   });
 
   it('allocates the initial supply upon deployment', async () => {
+    token = await ArtToken.deployed();
     totalSupply = await token.totalSupply();
     // assert total supply
     assert.equal(totalSupply.toNumber(), 1000000, 'totalSupply is correct')
@@ -39,6 +42,7 @@ contract('ArtToken', (accounts) => {
   });
 
   it('transfer token ownership', async () => {
+    token = await ArtToken.deployed();
     // function transfer testing
     balanceBefore = await token.balanceOf(accounts[1])
     result = await token.transfer(accounts[1], 250000, { from: accounts[0] })
@@ -63,6 +67,7 @@ contract('ArtToken', (accounts) => {
   });
 
   it('apprtove tokens for delegates transfer', async () => {
+    token = await ArtToken.deployed();
     result = await token.approve(accounts[1], 1000, {from: accounts[0]})
 
     transferEvent = result.logs[0]
@@ -79,6 +84,7 @@ contract('ArtToken', (accounts) => {
   });
 
   it('HANDLES delegates token transfer', async () => {
+    token = await ArtToken.deployed();
 
     fromAccount = accounts[2]
     toAccount = accounts[3]
