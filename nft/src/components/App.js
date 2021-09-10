@@ -11,6 +11,7 @@ const App = () => {
   const [contract, setContract] = useState();
   const [totalSupply, setTotalSupply] = useState();
   const [colors, setColors] = useState([]);
+  const [w3, setWeb3] = useState([]);
 
   const fetchColors = async () => {
     let _colors = [];
@@ -20,8 +21,6 @@ const App = () => {
       _colors.push(_color);
     }
 
-    console.log(_colors);
-
     setColors(_colors);
   };
 
@@ -29,6 +28,7 @@ const App = () => {
     const loadWeb3 = async () => {
       if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
+        setWeb3(window.web3);
         try {
           await window.ethereum.enable();
         } catch (error) {
@@ -36,6 +36,7 @@ const App = () => {
         }
       } else if (window.web3) {
         window.web3 = new Web3(window.web3.currentProvider);
+        setWeb3(window.web3);
       } else {
         window.alert(
           "Non-Ethereum browser detected. You should consider trying MetaMask!"
@@ -96,8 +97,19 @@ const App = () => {
   };
 
   const buyCoin = (color) => {
+    let _weiPrice = w3.utils.toWei(color.price.toString(), "Ether");
     contract.methods
       .transfer(color.owner, color.id)
+      .send({ from: account, value: color.price.toString() })
+      .on("confirmation", (confirmation) => {
+        fetchColors();
+      });
+  };
+
+  const submitPrice = (id, price) => {
+    let _price = w3.utils.toWei(price.toString(), "Ether");
+    contract.methods
+      .changePrice(id, _price)
       .send({ from: account })
       .on("confirmation", (confirmation) => {
         fetchColors();
@@ -122,10 +134,12 @@ const App = () => {
             return (
               <Token
                 key={k}
+                w3={w3}
                 color={color}
                 account={account}
                 saleCoin={saleCoin}
                 buyCoin={buyCoin}
+                submitPrice={submitPrice}
               />
             );
           })}
